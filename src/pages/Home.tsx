@@ -11,7 +11,7 @@ export default function Home() {
                     <h1 className="hero-title">Where Knowledge Meets Innovation!</h1>
                     <p className="hero-subtitle">Empowering Minds. Advancing Science. Transforming Lives.</p>
                     <div className="hero-actions">
-                        <Link to="/courses" className="btn btn-primary">Explore Programs</Link>
+                        <Link to="/certificate-courses" className="btn btn-primary">Explore Programs</Link>
                         <Link to="/about" className="btn btn-secondary">Learn More</Link>
                     </div>
                 </div>
@@ -42,7 +42,7 @@ export default function Home() {
                             <li><i className="fas fa-check-circle"></i> NVQ Level Courses</li>
                             <li><i className="fas fa-check-circle"></i> Diploma Programs</li>
                         </ul>
-                        <Link to="/courses" className="btn btn-primary mt-4">View Courses</Link>
+                        <Link to="/certificate-courses" className="btn btn-primary mt-4">View Courses</Link>
                     </div>
                 </div>
             </section>

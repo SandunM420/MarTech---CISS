@@ -77,7 +77,7 @@ export default function Contact() {
       `}</style>
 
             {/* Page Header */}
-            <section className="page-header">
+            <section className="page-header contact-hero">
                 <div className="container">
                     <h1>Contact Us</h1>
                     <p>We are here to help and answer any questions you might have.</p>

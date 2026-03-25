@@ -20,7 +20,7 @@ const courses = [
 export default function Diplomas() {
     return (
         <>
-            <section className="page-header">
+            <section className="page-header diplomas-hero">
                 <div className="container">
                     <h1>Diploma Programs</h1>
                     <p>Achieve professional excellence with our comprehensive Diploma courses.</p>

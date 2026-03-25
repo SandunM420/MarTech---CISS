@@ -17,7 +17,7 @@ const courses = [
 export default function NVQCourses() {
     return (
         <>
-            <section className="page-header">
+            <section className="page-header nvq-hero">
                 <div className="container">
                     <h1>NVQ Level Courses</h1>
                     <p>Build your practical skills with our Nationally Vocational Qualification programs.</p>

@@ -38,7 +38,7 @@ export default function Footer() {
                         <h3 className="footer-heading">Quick Links</h3>
                         <ul className="footer-links">
                             <li><Link to="/about">About Us</Link></li>
-                            <li><Link to="/courses">All Courses</Link></li>
+                            <li><Link to="/certificate-courses">All Courses</Link></li>
                             <li><Link to="/v-care">V-Care</Link></li>
                             <li><Link to="/contact">Contact Us</Link></li>
                         </ul>

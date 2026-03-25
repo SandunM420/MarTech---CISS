@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 export default function VCare() {
     return (
         <>
-            <section className="page-header" style={{ backgroundColor: '#E8F0FE', color: 'var(--text-dark)' }}>
+            <section className="page-header vcare-hero">
                 <div className="container">
-                    <h1 style={{ color: 'var(--primary-blue)' }}>V-Care Wellness Initiative</h1>
+                    <h1>V-Care Wellness Initiative</h1>
                     <p>Compassionate support and counseling for a balanced life.</p>
                 </div>
             </section>
