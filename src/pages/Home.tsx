@@ -56,7 +56,6 @@ export default function Home() {
                         <p className="section-text">
                             Our Research Center encourages applied research, publications, grants, and industry collaborations. We are committed to fostering an environment where scientific innovation drives meaningful change.
                         </p>
-                        <Link to="/publications" className="btn btn-primary mt-4">Discover Research</Link>
                     </div>
                     <div className="split-image-container">
                         <img src="/images/research.png" alt="Advanced scientific research laboratory at CISS" className="split-image shadow-effect" />

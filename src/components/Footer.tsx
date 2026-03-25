@@ -1,69 +1,46 @@
+import { Link } from 'react-router-dom';
+
 export default function Footer() {
     return (
         <footer className="main-footer">
             <div className="container">
                 <div className="footer-grid">
 
-                    {/* Column 1: Contact Icons (Aligned without heading) */}
+                    {/* Column 1: Contact Details */}
                     <div className="footer-col" style={{ marginTop: '0.2rem' }}>
                         <ul className="footer-contact-list">
                             <li>
                                 <div className="contact-icon-wrapper"><i className="fas fa-map-marker-alt"></i></div>
                                 <div className="contact-details">
                                     <span className="contact-label">Address:</span>
-                                    <p>Street Name, NY 38954</p>
+                                    <p>Colombo Institute of Scientific Studies (Pvt) Ltd.<br />No 523/3B, Madagodalanda Road, Athurugiriya. Sri Lanka.</p>
                                 </div>
                             </li>
                             <li>
                                 <div className="contact-icon-wrapper"><i className="fas fa-phone-alt"></i></div>
                                 <div className="contact-details">
-                                    <span className="contact-label">Phone:</span>
-                                    <p>578-393-4937</p>
+                                    <span className="contact-label">Contact:</span>
+                                    <p>+94702 88 99 00</p>
                                 </div>
                             </li>
                             <li>
-                                <div className="contact-icon-wrapper"><i className="fas fa-mobile-alt"></i></div>
+                                <div className="contact-icon-wrapper"><i className="fas fa-envelope"></i></div>
                                 <div className="contact-details">
-                                    <span className="contact-label">Mobile:</span>
-                                    <p>578-393-4937</p>
+                                    <span className="contact-label">Email:</span>
+                                    <p>info@ciss.lk</p>
                                 </div>
                             </li>
                         </ul>
                     </div>
 
-                    {/* Column 2: Contact Info Text */}
-                    <div className="footer-col">
-                        <h3 className="footer-heading">Contact Info</h3>
-                        <p className="footer-text">Nunc lobortis mattis aliquam faucibus purus in massa arcu odio ut sem nulla pharetra diam amet.</p>
-                    </div>
-
-                    {/* Column 3: About us */}
-                    <div className="footer-col">
-                        <h3 className="footer-heading">About us</h3>
-                        <ul className="footer-links">
-                            <li><a href="#">About Organization</a></li>
-                            <li><a href="#">Our Clients</a></li>
-                            <li><a href="#">Our Partners</a></li>
-                        </ul>
-                    </div>
-
-                    {/* Column 4: Quick Links */}
+                    {/* Column 2: Quick Links */}
                     <div className="footer-col">
                         <h3 className="footer-heading">Quick Links</h3>
                         <ul className="footer-links">
-                            <li><a href="#">Introduction</a></li>
-                            <li><a href="#">Organisation Team</a></li>
-                            <li><a href="#">Press Enquiries</a></li>
-                        </ul>
-                    </div>
-
-                    {/* Column 5: Important Links */}
-                    <div className="footer-col">
-                        <h3 className="footer-heading">Important Links</h3>
-                        <ul className="footer-links">
-                            <li><a href="#">Privacy Policy</a></li>
-                            <li><a href="#">Cookies Policy</a></li>
-                            <li><a href="#">Terms & Conditions</a></li>
+                            <li><Link to="/about">About Us</Link></li>
+                            <li><Link to="/courses">All Courses</Link></li>
+                            <li><Link to="/v-care">V-Care</Link></li>
+                            <li><Link to="/contact">Contact Us</Link></li>
                         </ul>
                     </div>
 

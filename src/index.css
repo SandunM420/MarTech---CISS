@@ -431,8 +431,8 @@ p {
 
 .btn-banner {
   background-color: var(--white);
-  color: #2ECC71;
-  /* Green text */
+  color: #3b82f6;
+  /* Blue text */
   padding: 1rem 3rem;
   font-size: 1.2rem;
   font-weight: 600;
@@ -445,7 +445,7 @@ p {
 .btn-banner:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-  color: #27AE60;
+  color: #1d4ed8;
   background-color: var(--white);
 }
 
@@ -458,7 +458,7 @@ p {
 
 .footer-grid {
   display: grid;
-  grid-template-columns: 1fr 1.3fr 1fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr;
   gap: 2rem;
   margin-bottom: 4rem;
   text-align: left;
@@ -557,10 +557,16 @@ p {
   text-align: center;
 }
 
+.page-header h1,
+.page-header h2,
+.page-header h3 {
+  color: var(--white);
+}
+
 /* Responsive Design */
 @media (max-width: 1200px) {
   .footer-grid {
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
   }
 }
 

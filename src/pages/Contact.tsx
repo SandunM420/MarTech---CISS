@@ -97,7 +97,7 @@ export default function Contact() {
                                 <i className="fas fa-map-marker-alt"></i>
                                 <div>
                                     <h3 style={{ fontSize: '13px', marginBottom: '0.25rem' }}>Our Location</h3>
-                                    <p style={{ margin: 0, color: 'var(--text-light)', fontSize: '10px' }}>123 Innovation Boulevard,<br />Colombo 03, Sri Lanka</p>
+                                    <p style={{ margin: 0, color: 'var(--text-light)', fontSize: '10px' }}>Colombo Institute of Scientific Studies (Pvt) Ltd.<br />No 523/3B, Madagodalanda Road, Athurugiriya. Sri Lanka.</p>
                                 </div>
                             </div>
 
@@ -105,7 +105,7 @@ export default function Contact() {
                                 <i className="fas fa-phone-alt"></i>
                                 <div>
                                     <h3 style={{ fontSize: '13px', marginBottom: '0.25rem' }}>Phone</h3>
-                                    <p style={{ margin: 0, color: 'var(--text-light)', fontSize: '10px' }}>+94 11 234 5678</p>
+                                    <p style={{ margin: 0, color: 'var(--text-light)', fontSize: '10px' }}>+94702 88 99 00</p>
                                 </div>
                             </div>
 
@@ -113,7 +113,7 @@ export default function Contact() {
                                 <i className="fas fa-envelope"></i>
                                 <div>
                                     <h3 style={{ fontSize: '13px', marginBottom: '0.25rem' }}>Email</h3>
-                                    <p style={{ margin: 0, color: 'var(--text-light)', fontSize: '10px' }}>info@ciss.edu.lk</p>
+                                    <p style={{ margin: 0, color: 'var(--text-light)', fontSize: '10px' }}>info@ciss.lk</p>
                                 </div>
                             </div>
                         </div>
@@ -143,10 +143,7 @@ export default function Contact() {
                         </div>
                     </div>
 
-                    {/* Map Placeholder */}
-                    <div className="map-placeholder">
-                        <i className="fas fa-map" style={{ marginRight: '15px' }}></i> Interactive Google Map Placeholder
-                    </div>
+
 
                 </div>
             </section>

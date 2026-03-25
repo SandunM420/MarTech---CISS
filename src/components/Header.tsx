@@ -34,14 +34,13 @@ export default function Header() {
                                 Courses <i className="fas fa-chevron-down"></i>
                             </Link>
                             <ul className="dropdown-menu">
-                                <li><Link to="/courses#certificate" onClick={closeMenu}>Certificate Courses</Link></li>
-                                <li><Link to="/courses#advance" onClick={closeMenu}>Advance Certificate Courses</Link></li>
-                                <li><Link to="/courses#nvq" onClick={closeMenu}>NVQ Level Courses</Link></li>
-                                <li><Link to="/courses#diplomas" onClick={closeMenu}>Diplomas</Link></li>
+                                <li><Link to="/certificate-courses" onClick={closeMenu}>Certificate Courses</Link></li>
+                                <li><Link to="/advanced-certificate-courses" onClick={closeMenu}>Advanced Certificate Courses</Link></li>
+                                <li><Link to="/nvq-courses" onClick={closeMenu}>NVQ Level Courses</Link></li>
+                                <li><Link to="/diplomas" onClick={closeMenu}>Diplomas</Link></li>
                             </ul>
                         </li>
 
-                        <li><Link to="/publications" className={isActive('/publications')} onClick={closeMenu}>Publications</Link></li>
                         <li><Link to="/v-care" className={isActive('/v-care')} onClick={closeMenu}>V-Care</Link></li>
                         <li><Link to="/contact" className={isActive('/contact')} onClick={closeMenu}>Contact</Link></li>
                     </ul>
