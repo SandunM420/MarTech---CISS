@@ -1,6 +1,17 @@
 import { Link } from 'react-router-dom';
 
 export default function CertificateCourses() {
+    const courses = [
+        'Basics in Child Psychology',
+        'Basics in Geriatric Psychology',
+        'English for Professionals',
+        'Dementia Care Training',
+        'Basic Nursing Care',
+        'Psychological First Aid',
+        'First Aid',
+        'Understanding AI',
+    ];
+
     return (
         <>
             <section className="page-header" style={{
@@ -17,17 +28,20 @@ export default function CertificateCourses() {
             <section className="inner-page-content" style={{ padding: 'var(--section-spacing) 0' }}>
                 <div className="container">
                     <div className="certificate-page-shell">
-                        <h2 style={{ color: 'var(--primary-blue)', marginBottom: '1.5rem', textAlign: 'center' }}>Available Courses</h2>
-                        <ul className="programs-list certificate-course-list" style={{ fontSize: '1.1rem', marginBottom: '3rem' }}>
-                            <li><i className="fas fa-check-circle"></i> Basics in Child Psychology</li>
-                            <li><i className="fas fa-check-circle"></i> Basics in Geriatric Psychology</li>
-                            <li><i className="fas fa-check-circle"></i> English for Professionals</li>
-                            <li><i className="fas fa-check-circle"></i> Dementia Care Training</li>
-                            <li><i className="fas fa-check-circle"></i> Basic Nursing Care</li>
-                            <li><i className="fas fa-check-circle"></i> Psychological First Aid</li>
-                            <li><i className="fas fa-check-circle"></i> First Aid</li>
-                            <li><i className="fas fa-check-circle"></i> Understanding AI</li>
-                        </ul>
+                        <div className="section-heading certificate-heading">
+                            <h2>Available Courses</h2>
+                        </div>
+
+                        <div className="certificate-course-grid">
+                            {courses.map((course) => (
+                                <div key={course} className="certificate-course-card">
+                                    <div className="certificate-course-icon">
+                                        <i className="fas fa-check"></i>
+                                    </div>
+                                    <p>{course}</p>
+                                </div>
+                            ))}
+                        </div>
 
                         <div className="course-info-callout">
                             <div className="course-info-icon"><i className="fas fa-circle-info"></i></div>

@@ -12,14 +12,14 @@ export default function VCare() {
 
             <section className="inner-page-content" style={{ padding: 'var(--section-spacing) 0' }}>
                 <div className="container vcare-shell">
-                    <div className="vcare-section">
-                        <i className="fas fa-hands-holding-circle" style={{ fontSize: '4rem', color: 'var(--primary-blue)', marginBottom: '1.5rem' }}></i>
+                    <div className="vcare-section vcare-card">
+                        <i className="fas fa-hands-holding-circle vcare-icon"></i>
                         <h2>Counselling & Psychological Services</h2>
-                        <h4 style={{ color: 'var(--primary-blue)', marginBottom: '1rem' }}>Your Wellbeing Matters</h4>
-                        <p style={{ color: 'var(--text-light)', fontSize: '1.1rem', marginBottom: '1.5rem' }}>
+                        <h4 className="vcare-subtitle">Your Wellbeing Matters</h4>
+                        <p className="vcare-copy">
                             We offer private, professional, and friendly support;
                         </p>
-                        <ul className="programs-list vcare-list" style={{ fontSize: '1.1rem' }}>
+                        <ul className="programs-list vcare-list">
                             <li><i className="fas fa-check-circle"></i> Individual counselling</li>
                             <li><i className="fas fa-check-circle"></i> Academic & career counselling</li>
                             <li><i className="fas fa-check-circle"></i> Psychological assessments</li>
@@ -27,12 +27,12 @@ export default function VCare() {
                     </div>
 
                     <div className="vcare-card">
-                        <i className="fas fa-heartbeat" style={{ fontSize: '3.5rem', color: 'var(--primary-blue)', marginBottom: '1.5rem' }}></i>
-                        <h2 style={{ marginBottom: '1rem' }}>Care & Wellness Services</h2>
-                        <p style={{ color: 'var(--text-light)', fontSize: '1.1rem', marginBottom: '1.5rem' }}>
+                        <i className="fas fa-heartbeat vcare-icon"></i>
+                        <h2 className="vcare-title">Care & Wellness Services</h2>
+                        <p className="vcare-copy">
                             We offer,
                         </p>
-                        <ul className="programs-list vcare-list" style={{ fontSize: '1.1rem' }}>
+                        <ul className="programs-list vcare-list">
                             <li><i className="fas fa-check-circle"></i> Nursing & Home Care Service</li>
                             <li><i className="fas fa-check-circle"></i> Wellness Center</li>
                             <li><i className="fas fa-check-circle"></i> Personal Care Assistance</li>
