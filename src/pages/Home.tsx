@@ -6,7 +6,6 @@ export default function Home() {
         <>
             {/* Hero Section */}
             <section className="hero-section">
-                <div className="hero-overlay"></div>
                 <div className="container hero-content">
                     <h1 className="hero-title">Where Knowledge Meets Innovation!</h1>
                     <p className="hero-subtitle">Empowering Minds. Advancing Science. Transforming Lives.</p>

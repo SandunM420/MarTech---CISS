@@ -7,8 +7,13 @@ export default function ContactBanner() {
                 <div className="contact-banner-box">
                     <div className="contact-banner-flex">
                         <div className="contact-banner-content">
-                            <h2>Have questions about your<br />academic journey?</h2>
-                            <p>Our team is here to guide you — reach out anytime.</p>
+                            <div className="contact-banner-header">
+                                <div className="contact-banner-icon">
+                                    <i className="fas fa-comments"></i>
+                                </div>
+                                <h2>Have questions about your<br />academic journey?</h2>
+                            </div>
+                            <p>Our team is here to guide you anytime - reach out anytime.</p>
                         </div>
                         <div className="contact-banner-action">
                             <Link to="/contact" className="btn btn-banner">

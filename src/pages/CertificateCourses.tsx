@@ -16,9 +16,9 @@ export default function CertificateCourses() {
 
             <section className="inner-page-content" style={{ padding: 'var(--section-spacing) 0' }}>
                 <div className="container">
-                    <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-                        <h2 style={{ color: 'var(--primary-blue)', marginBottom: '1.5rem' }}>Available Courses</h2>
-                        <ul className="programs-list" style={{ fontSize: '1.1rem', marginBottom: '3rem' }}>
+                    <div className="certificate-page-shell">
+                        <h2 style={{ color: 'var(--primary-blue)', marginBottom: '1.5rem', textAlign: 'center' }}>Available Courses</h2>
+                        <ul className="programs-list certificate-course-list" style={{ fontSize: '1.1rem', marginBottom: '3rem' }}>
                             <li><i className="fas fa-check-circle"></i> Basics in Child Psychology</li>
                             <li><i className="fas fa-check-circle"></i> Basics in Geriatric Psychology</li>
                             <li><i className="fas fa-check-circle"></i> English for Professionals</li>
@@ -29,9 +29,10 @@ export default function CertificateCourses() {
                             <li><i className="fas fa-check-circle"></i> Understanding AI</li>
                         </ul>
 
-                        <div style={{ backgroundColor: 'var(--white)', boxShadow: 'var(--shadow-md)', borderRadius: 'var(--border-radius-lg)', padding: '3rem 2rem', textAlign: 'center' }}>
-                            <h3 style={{ marginBottom: '1rem' }}>Need more information?</h3>
-                            <p style={{ color: 'var(--text-light)', marginBottom: '2rem' }}>Contact us for details regarding admission, deadlines, and requirements.</p>
+                        <div className="course-info-callout">
+                            <div className="course-info-icon"><i className="fas fa-circle-info"></i></div>
+                            <h3>Need more information?</h3>
+                            <p>Contact us for details regarding admission, deadlines, and requirements.</p>
                             <Link to="/contact" className="btn btn-primary">Contact Us</Link>
                         </div>
                     </div>

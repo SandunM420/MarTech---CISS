@@ -73,6 +73,33 @@ export default function Contact() {
                 grid-template-columns: 1fr;
                 gap: 2rem;
             }
+            .contact-info-card {
+                padding: 1.25rem;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+            .contact-info-card i {
+                font-size: 1.5rem;
+            }
+            .contact-form {
+                padding: 1.5rem;
+            }
+            .map-placeholder {
+                height: 220px;
+                font-size: 1rem;
+            }
+        }
+        @media (max-width: 480px) {
+            .contact-form {
+                padding: 1.25rem;
+            }
+            .contact-info-card h3 {
+                font-size: 0.95rem !important;
+            }
+            .contact-info-card p {
+                font-size: 0.9rem !important;
+                line-height: 1.6;
+            }
         }
       `}</style>
 
