@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import ContactBanner from '../components/ContactBanner';
 
 export default function Home() {
     return (
@@ -48,7 +49,7 @@ export default function Home() {
 
             {/* Research & Innovation Section */}
             <section className="research-section bg-light">
-                <div className="container split-layout reverse">
+                <div className="container split-layout">
                     <div className="split-content right-padding">
                         <h2>Research & Innovation</h2>
                         <h3 className="subsection-title">Scientific Research for Real-World Impact</h3>
@@ -62,6 +63,9 @@ export default function Home() {
                     </div>
                 </div>
             </section>
+
+            {/* Contact Us Banner (Home Only) */}
+            <ContactBanner />
         </>
     );
 }

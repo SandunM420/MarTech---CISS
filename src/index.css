@@ -374,17 +374,179 @@ p {
   color: var(--text-light);
 }
 
-/* Footer */
-.main-footer {
-  background-color: var(--text-dark);
-  color: var(--white);
+/* Footer & Banners */
+.contact-banner {
+  /* reduce top/bottom gutter so banner sits closer to surrounding sections */
   padding: 2rem 0;
+  margin-bottom: 1.5rem;
+  background: transparent;
+}
+
+.contact-banner-box {
+  --banner-radius: 28px; /* large, rounded corners */
+  max-width: 1000px;
+  margin: 0.5rem auto; /* small vertical gaps above and below */
+  padding: 2.5rem 3rem;
+  border-radius: var(--banner-radius);
+  /* solid bright blue requested */
+  background-color: #3b82f6;
+  background-image: none;
+  color: var(--white);
+  box-shadow: 0 36px 50px rgba(11, 22, 45, 0.12);
+}
+
+/* make the corners appear very rounded on small screens too */
+@media (max-width: 640px) {
+  .contact-banner-box {
+    padding: 2rem;
+    border-radius: 18px;
+    margin: 0 1rem;
+  }
+}
+
+.contact-banner-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.contact-banner-content {
+  flex: 1;
+}
+
+.contact-banner-content h2 {
+  color: var(--white);
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.contact-banner-content p {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.15rem;
+  margin: 0;
+}
+
+.btn-banner {
+  background-color: var(--white);
+  color: #2ECC71;
+  /* Green text */
+  padding: 1rem 3rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  border-radius: 4px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform var(--transition-medium), box-shadow var(--transition-medium);
+  white-space: nowrap;
+}
+
+.btn-banner:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  color: #27AE60;
+  background-color: var(--white);
+}
+
+.main-footer {
+  background-color: #161D2B;
+  /* Dark navy blue from screenshot */
+  color: var(--white);
+  padding: 5rem 0 2rem;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr 1fr 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 4rem;
+  text-align: left;
+}
+
+.footer-heading {
+  color: var(--white);
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+
+.footer-text {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.95rem;
+  margin-bottom: 2rem;
+  line-height: 1.8;
+}
+
+.footer-contact-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-contact-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+.contact-icon-wrapper {
+  color: rgba(255, 255, 255, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.contact-details .contact-label {
+  display: block;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 0.2rem;
+}
+
+.contact-details p {
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 0.8rem;
+}
+
+.footer-links a {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.95rem;
+  transition: color var(--transition-fast);
+}
+
+.footer-links a:hover {
+  color: var(--white);
+}
+
+.footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 2rem;
   text-align: center;
 }
 
 .footer-bottom p {
   margin: 0;
-  color: #9CA3AF;
+  color: rgba(255, 255, 255, 0.4);
 }
 
 /* Inner Pages specific utility */
@@ -396,12 +558,28 @@ p {
 }
 
 /* Responsive Design */
+@media (max-width: 1200px) {
+  .footer-grid {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
 @media (max-width: 992px) {
 
   .split-layout,
   .split-layout.reverse {
     flex-direction: column;
     gap: 3rem;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 576px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
   }
 }
 

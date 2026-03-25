@@ -15,7 +15,9 @@ export default function Header() {
         <header className="main-header">
             <div className="container header-container">
                 <div className="logo">
-                    <Link to="/" onClick={closeMenu}><strong>CISS</strong></Link>
+                    <Link to="/" onClick={closeMenu}>
+                        <img src="/images/logo.png" alt="CISS Logo" style={{ height: '75px', objectFit: 'contain', margin: '5px 0' }} />
+                    </Link>
                 </div>
 
                 <button className="menu-toggle" aria-label="Toggle navigation" onClick={toggleMenu}>
