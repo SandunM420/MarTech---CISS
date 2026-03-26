@@ -1,6 +1,21 @@
+import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 
-export default function ContactBanner() {
+type ContactBannerProps = {
+    title?: ReactNode;
+    description?: string;
+    buttonText?: string;
+    to?: string;
+    iconClassName?: string;
+};
+
+export default function ContactBanner({
+    title = <>Have questions about your<br />academic journey?</>,
+    description = 'Our team is here to guide you anytime - reach out anytime.',
+    buttonText = 'Contact us now',
+    to = '/contact',
+    iconClassName = 'fas fa-comments',
+}: ContactBannerProps) {
     return (
         <section className="contact-banner">
             <div className="container">
@@ -9,15 +24,15 @@ export default function ContactBanner() {
                         <div className="contact-banner-content">
                             <div className="contact-banner-header">
                                 <div className="contact-banner-icon">
-                                    <i className="fas fa-comments"></i>
+                                    <i className={iconClassName}></i>
                                 </div>
-                                <h2>Have questions about your<br />academic journey?</h2>
+                                <h2>{title}</h2>
                             </div>
-                            <p>Our team is here to guide you anytime - reach out anytime.</p>
+                            <p>{description}</p>
                         </div>
                         <div className="contact-banner-action">
-                            <Link to="/contact" className="btn btn-banner">
-                                Contact us now
+                            <Link to={to} className="btn btn-banner">
+                                {buttonText}
                             </Link>
                         </div>
                     </div>

@@ -229,7 +229,7 @@ export default function Contact() {
                         {/* Contact Form */}
                         <div>
                             <form className="contact-form" onSubmit={handleSubmit}>
-                                <h3 style={{ marginBottom: '1.5rem', color: 'var(--text-dark)' }}>Send us a Message</h3>
+                                <h3 style={{ marginBottom: '1.5rem', color: 'var(--heading-blue)' }}>Send us a Message</h3>
 
                                 {submitStatus && (
                                     <div className={`form-status ${submitStatus.type}`} role="status">

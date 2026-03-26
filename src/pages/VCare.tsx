@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
 import { assetUrl } from '../utils/assets';
+import ContactBanner from '../components/ContactBanner';
 
 export default function VCare() {
     return (
@@ -45,12 +45,17 @@ export default function VCare() {
                             <li><i className="fas fa-check-circle"></i> Companionship</li>
                             <li><i className="fas fa-check-circle"></i> 24/7 Support</li>
                         </ul>
-                        <div className="vcare-action">
-                            <Link to="/contact" className="btn btn-primary">Schedule a Session</Link>
-                        </div>
                     </div>
                 </div>
             </section>
+
+            <ContactBanner
+                title={<>Ready to begin your<br />wellness journey?</>}
+                description="Connect with our team to schedule a session and get the support you need."
+                buttonText="Schedule a Session"
+                to="/contact"
+                iconClassName="fas fa-heartbeat"
+            />
         </>
     );
 }

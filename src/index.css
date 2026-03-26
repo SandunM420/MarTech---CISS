@@ -566,7 +566,7 @@ p {
   padding: 2rem;
   border-radius: var(--border-radius-lg);
   box-shadow: var(--shadow-md);
-  border-top: 4px solid var(--primary-blue);
+  border-top: 4px solid var(--accent-blue);
 }
 
 .course-card-title {
@@ -665,6 +665,7 @@ p {
   background-color: var(--white);
   box-shadow: var(--shadow-md);
   border-radius: var(--border-radius-lg);
+  border-top: 4px solid var(--accent-blue);
   padding: 4rem 2rem;
 }
 
@@ -1532,11 +1533,11 @@ p {
   gap: 1.25rem;
   min-height: 100%;
   background:
-    radial-gradient(circle at top right, rgba(59, 130, 246, 0.18), transparent 36%),
-    linear-gradient(145deg, #163c9a 0%, #1f56db 55%, #3b82f6 100%);
+    radial-gradient(circle at top right, rgba(75, 126, 189, 0.2), transparent 36%),
+    linear-gradient(145deg, #1d4375 0%, #245390 55%, #4e84d2 100%);
   padding: 1.75rem;
   border-radius: 24px;
-  box-shadow: 0 22px 48px rgba(26, 86, 219, 0.16);
+  box-shadow: 0 22px 48px rgba(36, 83, 144, 0.22);
   color: #fff;
 }
 
