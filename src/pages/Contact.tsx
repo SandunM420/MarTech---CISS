@@ -87,7 +87,7 @@ export default function Contact() {
         }
         .contact-info-card i {
             font-size: 2rem;
-            color: var(--primary-blue);
+            color: var(--accent-blue);
         }
         .contact-form {
             background-color: var(--white);
@@ -199,7 +199,7 @@ export default function Contact() {
                     <div className="contact-grid">
                         {/* Contact Information */}
                         <div>
-                            <h2 style={{ color: 'var(--primary-blue)', marginBottom: '2rem' }}>Get In Touch</h2>
+                            <h2 style={{ color: 'var(--heading-blue)', marginBottom: '2rem' }}>Get In Touch</h2>
 
                             <div className="contact-info-card">
                                 <i className="fas fa-map-marker-alt"></i>

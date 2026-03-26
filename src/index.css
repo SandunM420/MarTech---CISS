@@ -1,6 +1,9 @@
 :root {
   /* Color Palette */
   --primary-blue: #1A56DB;
+  --heading-blue: #3f90dc;
+  --accent-blue: #245390;
+  --accent-blue-dark: #1d4579;
   /* Deep professional blue */
   --primary-blue-dark: #1E40AF;
   --secondary-color: #F3F4F6;
@@ -78,7 +81,7 @@ h4 {
   font-weight: 700;
   line-height: 1.2;
   margin-bottom: 1rem;
-  color: #111827;
+  color: var(--heading-blue);
 }
 
 h1 {
@@ -116,13 +119,13 @@ p {
 }
 
 .btn-primary {
-  background-color: var(--primary-blue);
+  background-color: var(--accent-blue);
   color: var(--white);
   box-shadow: var(--shadow-md);
 }
 
 .btn-primary:hover {
-  background-color: var(--primary-blue-dark);
+  background-color: var(--accent-blue-dark);
   transform: translateY(-2px);
   box-shadow: var(--shadow-lg);
 }
@@ -366,12 +369,12 @@ p {
 }
 
 .mission-section h2 {
-  color: var(--primary-blue);
+  color: var(--heading-blue);
 }
 
 .programs-section h2,
 .research-section h2 {
-  color: var(--primary-blue);
+  color: var(--heading-blue);
 }
 
 .mission-text {
@@ -432,11 +435,11 @@ p {
 }
 
 .programs-list i {
-  color: var(--primary-blue);
+  color: var(--accent-blue);
 }
 
 .subsection-title {
-  color: var(--primary-blue);
+  color: var(--heading-blue);
   font-weight: 600;
   margin-bottom: 1rem;
 }
@@ -455,7 +458,7 @@ p {
 }
 
 .certificate-heading h2 {
-  color: var(--primary-blue);
+  color: var(--heading-blue);
 }
 
 .certificate-course-grid {
@@ -491,7 +494,7 @@ p {
   justify-content: center;
   flex-shrink: 0;
   color: #fff;
-  background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-dark));
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-blue-dark));
   box-shadow: 0 10px 20px rgba(26, 86, 219, 0.18);
 }
 
@@ -532,7 +535,7 @@ p {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-dark));
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-blue-dark));
   color: #fff;
   font-size: 1.5rem;
   box-shadow: 0 14px 28px rgba(26, 86, 219, 0.2);
@@ -540,7 +543,7 @@ p {
 
 .course-info-callout h3 {
   margin: 0 0 0.85rem;
-  color: var(--primary-blue);
+  color: var(--heading-blue);
   font-size: 1.7rem;
 }
 
@@ -567,7 +570,7 @@ p {
 }
 
 .course-card-title {
-  color: var(--primary-blue);
+  color: var(--heading-blue);
   margin-bottom: 1.25rem;
   font-size: 1.2rem;
   line-height: 1.4;
@@ -628,7 +631,7 @@ p {
 
 .vcare-icon {
   font-size: 3.5rem;
-  color: var(--primary-blue);
+  color: var(--accent-blue);
   margin-bottom: 1.5rem;
 }
 
@@ -638,7 +641,7 @@ p {
 }
 
 .vcare-subtitle {
-  color: var(--primary-blue);
+  color: var(--heading-blue);
   margin-bottom: 1rem;
 }
 
@@ -685,10 +688,10 @@ p {
   padding: 2.25rem 2.5rem;
   border-radius: var(--banner-radius);
   background:
-    radial-gradient(circle at top right, rgba(59, 130, 246, 0.18), transparent 36%),
-    linear-gradient(145deg, #163c9a 0%, #1f56db 55%, #3b82f6 100%);
+    radial-gradient(circle at top right, rgba(75, 126, 189, 0.2), transparent 36%),
+    linear-gradient(145deg, #1d4375 0%, #245390 55%, #4e84d2 100%);
   color: var(--white);
-  box-shadow: 0 22px 48px rgba(26, 86, 219, 0.16);
+  box-shadow: 0 22px 48px rgba(36, 83, 144, 0.22);
 }
 
 .contact-banner-box::before {
@@ -1396,7 +1399,7 @@ p {
   width: 62px;
   height: 62px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-dark));
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-blue-dark));
   color: white;
   display: flex;
   align-items: center;
@@ -1428,7 +1431,7 @@ p {
 .section-heading h3,
 .about-legal .card h3,
 .feature-card h3 {
-  color: var(--primary-blue);
+  color: var(--heading-blue);
 }
 
 .about-intro h2 {
@@ -1493,7 +1496,7 @@ p {
   width: 50px;
   height: 50px;
   border-radius: 14px;
-  background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-dark));
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-blue-dark));
   color: #fff;
   display: flex;
   align-items: center;
