@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { assetUrl } from '../utils/assets';
 
@@ -6,16 +6,7 @@ export default function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [coursesOpen, setCoursesOpen] = useState(false);
     const location = useLocation();
-    const [logoSize, setLogoSize] = useState<number>(75);
-
-    useEffect(() => {
-        try {
-            const stored = localStorage.getItem('logoSize');
-            if (stored) setLogoSize(Number(stored));
-        } catch (e) {
-            /* ignore */
-        }
-    }, []);
+    const logoSize = 135;
 
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
     const closeMenu = () => {
@@ -41,11 +32,17 @@ export default function Header() {
                             style={{ height: `${logoSize}px`, objectFit: 'contain', margin: '5px 0' }}
                         />
                     </Link>
-
                 </div>
 
-                <button className="menu-toggle" aria-label="Toggle navigation" onClick={toggleMenu}>
-                    <i className={`fas ${isMenuOpen ? 'fa-times' : 'fa-bars'}`}></i>
+                <button
+                    className={`menu-toggle ${isMenuOpen ? 'active' : ''}`}
+                    aria-label="Toggle navigation"
+                    aria-expanded={isMenuOpen}
+                    onClick={toggleMenu}
+                >
+                    <span></span>
+                    <span></span>
+                    <span></span>
                 </button>
 
                 <nav className={`main-nav ${isMenuOpen ? 'active' : ''}`}>

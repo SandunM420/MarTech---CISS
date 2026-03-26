@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { assetUrl } from '../utils/assets';
+import ScrollTopButton from '../components/ScrollTopButton';
 
 const courses = [
     'Diploma in Psychology',
@@ -76,6 +77,7 @@ export default function Diplomas() {
                     </div>
                 </div>
             </section>
+            <ScrollTopButton />
         </>
     );
 }

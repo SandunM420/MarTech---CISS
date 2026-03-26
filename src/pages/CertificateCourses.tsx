@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { assetUrl } from '../utils/assets';
+import ScrollTopButton from '../components/ScrollTopButton';
 
 export default function CertificateCourses() {
     const courses = [
@@ -53,6 +54,7 @@ export default function CertificateCourses() {
                     </div>
                 </div>
             </section>
+            <ScrollTopButton />
         </>
     );
 }

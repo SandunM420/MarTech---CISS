@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { assetUrl } from '../utils/assets';
+import ScrollTopButton from '../components/ScrollTopButton';
 
 const courses = [
     { title: 'NVQ Level 3 - Child Care & Therapy Assistant (Special Needs)', level: 'NVQ Level 3 Certificate Programme' },
@@ -69,6 +70,7 @@ export default function NVQCourses() {
                     </div>
                 </div>
             </section>
+            <ScrollTopButton />
         </>
     );
 }
