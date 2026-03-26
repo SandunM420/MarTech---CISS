@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { assetUrl } from '../utils/assets';
 
 export default function CertificateCourses() {
     const courses = [
@@ -15,7 +16,7 @@ export default function CertificateCourses() {
     return (
         <>
             <section className="page-header" style={{
-                backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(/images/certificate-header-bg-2.jpg)',
+                backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(${assetUrl('images/certificate-header-bg-2.jpg')})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center'
             }}>

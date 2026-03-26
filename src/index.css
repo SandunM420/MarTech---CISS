@@ -323,7 +323,6 @@ p {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url('/images/home-hero.jpg');
   background-size: cover;
   background-position: center;
   color: var(--white);
@@ -653,8 +652,9 @@ p {
 
 .vcare-list {
   text-align: left;
-  display: inline-block;
-  width: min(100%, 460px);
+  display: table;
+  width: fit-content;
+  max-width: 100%;
   margin: 0 auto;
 }
 
@@ -954,10 +954,8 @@ p {
   text-align: center;
 }
 
-/* NVQ hero background (uses public/images/nvq-hero.jpg) */
 .page-header.nvq-hero {
   background-color: var(--primary-blue-dark);
-  background-image: url('/images/nvq-hero.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -978,10 +976,8 @@ p {
   z-index: 1;
 }
 
-/* Diplomas hero background (uses public/images/diplomas-hero.jpg) */
 .page-header.diplomas-hero {
   background-color: var(--primary-blue-dark);
-  background-image: url('/images/diplomas-hero.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -1002,10 +998,8 @@ p {
   z-index: 1;
 }
 
-/* About page hero background (uses public/images/about-hero.jpg) */
 .page-header.about-hero {
   background-color: var(--primary-blue-dark);
-  background-image: url('/images/about-hero.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -1026,10 +1020,8 @@ p {
   z-index: 1;
 }
 
-/* V-Care hero background (uses public/images/vcare-hero.jpg) */
 .page-header.vcare-hero {
   background-color: var(--primary-blue-dark);
-  background-image: url('/images/vcare-hero.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -1055,10 +1047,8 @@ p {
   color: #ffffff;
 }
 
-/* Contact page hero background (uses public/images/contact-hero.jpg) */
 .page-header.contact-hero {
   background-color: var(--primary-blue-dark);
-  background-image: url('/images/contact-hero.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

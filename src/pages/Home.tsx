@@ -1,11 +1,15 @@
 import { Link } from 'react-router-dom';
 import ContactBanner from '../components/ContactBanner';
+import { assetUrl } from '../utils/assets';
 
 export default function Home() {
     return (
         <>
             {/* Hero Section */}
-            <section className="hero-section">
+            <section
+                className="hero-section"
+                style={{ backgroundImage: `url(${assetUrl('images/home-hero.jpg')})` }}
+            >
                 <div className="container hero-content">
                     <h1 className="hero-title">Where Knowledge Meets Innovation!</h1>
                     <p className="hero-subtitle">Empowering Minds. Advancing Science. Transforming Lives.</p>
@@ -30,7 +34,7 @@ export default function Home() {
             <section className="programs-section">
                 <div className="container split-layout">
                     <div className="split-image-container">
-                        <img src="/images/programs.png" alt="Students engaged in learning at CISS" className="split-image" />
+                        <img src={assetUrl('images/programs.png')} alt="Students engaged in learning at CISS" className="split-image" />
                     </div>
                     <div className="split-content left-padding">
                         <h2>Academic Programs</h2>
@@ -57,7 +61,7 @@ export default function Home() {
                         </p>
                     </div>
                     <div className="split-image-container">
-                        <img src="/images/research.png" alt="Advanced scientific research laboratory at CISS" className="split-image shadow-effect" />
+                        <img src={assetUrl('images/research.png')} alt="Advanced scientific research laboratory at CISS" className="split-image shadow-effect" />
                     </div>
                 </div>
             </section>

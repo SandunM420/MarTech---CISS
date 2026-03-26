@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { assetUrl } from '../utils/assets';
 
 const courses = [
     { title: 'NVQ Level 3 - Child Care & Therapy Assistant (Special Needs)', level: 'NVQ Level 3 Certificate Programme' },
@@ -17,7 +18,10 @@ const courses = [
 export default function NVQCourses() {
     return (
         <>
-            <section className="page-header nvq-hero">
+            <section
+                className="page-header nvq-hero"
+                style={{ backgroundImage: `url(${assetUrl('images/nvq-hero.jpg')})` }}
+            >
                 <div className="container">
                     <h1>NVQ Level Courses</h1>
                     <p>Build your practical skills with our Nationally Vocational Qualification programs.</p>

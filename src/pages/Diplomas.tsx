@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { assetUrl } from '../utils/assets';
 
 const courses = [
     'Diploma in Psychology',
@@ -20,7 +21,10 @@ const courses = [
 export default function Diplomas() {
     return (
         <>
-            <section className="page-header diplomas-hero">
+            <section
+                className="page-header diplomas-hero"
+                style={{ backgroundImage: `url(${assetUrl('images/diplomas-hero.jpg')})` }}
+            >
                 <div className="container">
                     <h1>Diploma Programs</h1>
                     <p>Achieve professional excellence with our comprehensive Diploma courses.</p>

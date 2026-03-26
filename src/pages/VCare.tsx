@@ -1,9 +1,13 @@
 import { Link } from 'react-router-dom';
+import { assetUrl } from '../utils/assets';
 
 export default function VCare() {
     return (
         <>
-            <section className="page-header vcare-hero">
+            <section
+                className="page-header vcare-hero"
+                style={{ backgroundImage: `url(${assetUrl('images/vcare-hero.jpg')})` }}
+            >
                 <div className="container">
                     <h1>V-Care Wellness Initiative</h1>
                     <p>Compassionate support and counseling for a balanced life.</p>

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { assetUrl } from '../utils/assets';
 
 const courses = [
     { title: 'Advanced Certificate in Psychology', id: 'ACP' },
@@ -13,7 +14,7 @@ export default function AdvancedCertificateCourses() {
     return (
         <>
             <section className="page-header" style={{
-                backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(/images/advanced-certificate-header-bg.jpg)',
+                backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(${assetUrl('images/advanced-certificate-header-bg.jpg')})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center'
             }}>

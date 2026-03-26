@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { assetUrl } from '../utils/assets';
 
 export default function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -11,20 +12,22 @@ export default function Header() {
         try {
             const stored = localStorage.getItem('logoSize');
             if (stored) setLogoSize(Number(stored));
-        } catch (e) { /* ignore */ }
+        } catch (e) {
+            /* ignore */
+        }
     }, []);
 
-    // Logo size is read from localStorage on mount; controls removed per request.
-
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-    const closeMenu = () => { setIsMenuOpen(false); setCoursesOpen(false); };
+    const closeMenu = () => {
+        setIsMenuOpen(false);
+        setCoursesOpen(false);
+    };
 
     const toggleCourses = (e?: React.MouseEvent) => {
         if (e) e.preventDefault();
         setCoursesOpen(!coursesOpen);
     };
 
-    // Helper for active class
     const isActive = (path: string) => location.pathname === path ? 'active' : '';
 
     return (
@@ -32,10 +35,13 @@ export default function Header() {
             <div className="container header-container">
                 <div className="logo">
                     <Link to="/" onClick={closeMenu}>
-                        <img src="/images/logo.png" alt="CISS Logo" style={{ height: `${logoSize}px`, objectFit: 'contain', margin: '5px 0' }} />
+                        <img
+                            src={assetUrl('images/logo.png')}
+                            alt="CISS Logo"
+                            style={{ height: `${logoSize}px`, objectFit: 'contain', margin: '5px 0' }}
+                        />
                     </Link>
 
-                    {/* Logo size controls removed — keeping current size */}
                 </div>
 
                 <button className="menu-toggle" aria-label="Toggle navigation" onClick={toggleMenu}>

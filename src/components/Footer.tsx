@@ -67,10 +67,13 @@ export default function Footer() {
 
                 <div className="footer-bottom">
                     <p>&copy; 2026 Colombo Institute of Scientific Studies (CISS). All rights reserved.</p>
-                    <div className="footer-bottom-links">
-                        <Link to="/about">About</Link>
-                        <Link to="/contact">Contact</Link>
-                    </div>
+                    <a
+                        href="https://www.instagram.com/martechmedia.digi/"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        Website by MarTech Media
+                    </a>
                 </div>
             </div>
         </footer>

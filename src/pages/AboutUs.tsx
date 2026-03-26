@@ -1,7 +1,12 @@
+import { assetUrl } from '../utils/assets';
+
 export default function AboutUs() {
     return (
         <>
-            <section className="page-header about-hero">
+            <section
+                className="page-header about-hero"
+                style={{ backgroundImage: `url(${assetUrl('images/about-hero.jpg')})` }}
+            >
                 <div className="container">
                     <h1>About CISS</h1>
                     <p>Empowering Minds. Advancing Science. Transforming Lives.</p>
@@ -101,7 +106,7 @@ export default function AboutUs() {
                                     </div>
 
                                     <aside className="values-media">
-                                        <img src="/images/values-side.jpg" alt="Learners collaborating in a group session" />
+                                        <img src={assetUrl('images/values-side.jpg')} alt="Learners collaborating in a group session" />
                                     </aside>
                                 </div>
                             </div>
