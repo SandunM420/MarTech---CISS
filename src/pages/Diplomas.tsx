@@ -1,25 +1,20 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { assetUrl } from '../utils/assets';
 import ScrollTopButton from '../components/ScrollTopButton';
-
-const courses = [
-    'Diploma in Psychology',
-    'Diploma in Psychological Counselling',
-    'Diploma in Education',
-    'Diploma in Business Management',
-    'Diploma in Accounting',
-    'Diploma in Child Care Center Management',
-    'Diploma in Early Childhood Development Education',
-    'Diploma in Event Management',
-    'Diploma in Fashion Design Technology',
-    'Diploma in Hospitality Management',
-    'Diploma in Human Resource Management',
-    'Diploma in Marketing Management',
-    'Diploma in Nursing',
-    'Diploma in Teaching English as a Second Language'
-];
+import CourseEditorModal from '../components/CourseEditorModal';
+import { useAdminAuth } from '../context/AdminAuthContext';
+import { useCourseCatalog } from '../context/CourseCatalogContext';
+import { createEmptyCourse, type Course, type DetailedCourse } from '../data/courseCatalog';
+import { assetUrl } from '../utils/assets';
 
 export default function Diplomas() {
+    const { isAuthenticated } = useAdminAuth();
+    const { catalog, addCourse, updateCourse, deleteCourse, toggleHidden } = useCourseCatalog();
+    const [editingCourseId, setEditingCourseId] = useState<string | null>(null);
+    const [addingCourse, setAddingCourse] = useState<Course | null>(null);
+    const courses = (isAuthenticated ? catalog.diploma : catalog.diploma.filter((course) => !course.hidden)) as DetailedCourse[];
+    const editingCourse = (catalog.diploma.find((course) => course.id === editingCourseId) || null) as DetailedCourse | null;
+
     return (
         <>
             <section
@@ -34,41 +29,67 @@ export default function Diplomas() {
 
             <section className="inner-page-content" style={{ padding: 'var(--section-spacing) 0' }}>
                 <div className="container">
-                    <div className="course-cards-grid">
-                        {courses.map((course, index) => (
-                            <div key={index} className="course-card">
-                                <h3 className="course-card-title">{course}</h3>
-                                <ul className="course-card-list">
-                                    <li><strong>Level:</strong> NVQ Level 5/6 Certificate Programme</li>
-                                    <li><strong>Method:</strong> Full Time/ Part Time</li>
-                                    <li><strong>Medium:</strong> English & Sinhala</li>
-                                    <li>
-                                        <strong>Duration:</strong><br />
-                                        <span className="muted">For further details, contact us. +947 02 88 99 00</span>
-                                    </li>
-                                    <li className="spaced">
-                                        <strong>Entry Requirements:</strong>
-                                        <ul className="nested-list">
-                                            <li>GCE (A/L) Examination in three (3) subjects OR</li>
-                                            <li>Foundation Program equivalent to the GCE (A/L) OR</li>
-                                            <li>GCE (O/L) Examination with accredited work experience or accredited prior learning followed by a relevant programme of study equivalent to a minimum of 30 credits OR</li>
-                                            <li>Demonstrated competence in the relevant field and potential for future career development OR</li>
-                                            <li>Completion of NVQ Level 4 or equivalent qualifications OR</li>
-                                            <li>A good working knowledge of the language of instruction of the Diploma program.</li>
-                                        </ul>
-                                    </li>
-                                    <li className="spaced">
-                                        <strong>Course Structure and Modules:</strong><br />
-                                        <span className="muted">For further details, contact us. +947 02 88 99 00</span>
-                                    </li>
-                                    <li className="spaced">
-                                        <strong>Programme Fees & Investment:</strong><br />
-                                        <span className="muted">For further details, contact us. +947 02 88 99 00<br />(Payable in 3 installments)</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        ))}
-                    </div>
+                    {courses.length ? (
+                        <div className="course-cards-grid">
+                            {courses.map((course) => (
+                                <div key={course.id} className={`course-card ${course.hidden ? 'course-card-hidden' : ''}`}>
+                                    {course.hidden ? <span className="course-visibility-badge">Hidden</span> : null}
+                                    <h3 className="course-card-title">{course.title}</h3>
+                                    <ul className="course-card-list">
+                                        <li><strong>Level:</strong> {course.level}</li>
+                                        <li><strong>Method:</strong> {course.method}</li>
+                                        <li><strong>Medium:</strong> {course.medium}</li>
+                                        <li>
+                                            <strong>Duration:</strong><br />
+                                            <span className="muted">{course.duration}</span>
+                                        </li>
+                                        <li className="spaced">
+                                            <strong>Entry Requirements:</strong>
+                                            <ul className="nested-list">
+                                                {course.entryRequirements.map((item: string) => <li key={item}>{item}</li>)}
+                                            </ul>
+                                        </li>
+                                        <li className="spaced">
+                                            <strong>Course Structure and Modules:</strong><br />
+                                            <span className="muted">{course.modulesInfo}</span>
+                                        </li>
+                                        <li className="spaced">
+                                            <strong>Programme Fees & Investment:</strong><br />
+                                            <span className="muted">{course.feesInfo}</span>
+                                        </li>
+                                    </ul>
+
+                                    {isAuthenticated ? (
+                                        <div className="course-admin-actions">
+                                            <button type="button" className="btn course-admin-btn" onClick={() => setEditingCourseId(course.id)}>
+                                                Edit
+                                            </button>
+                                            <button
+                                                type="button"
+                                                className="btn course-admin-btn course-admin-btn-danger"
+                                                onClick={() => {
+                                                    if (window.confirm(`Delete "${course.title}"?`)) {
+                                                        deleteCourse('diploma', course.id);
+                                                    }
+                                                }}
+                                            >
+                                                Delete
+                                            </button>
+                                            <button
+                                                type="button"
+                                                className="btn course-admin-btn course-admin-btn-secondary"
+                                                onClick={() => toggleHidden('diploma', course.id)}
+                                            >
+                                                {course.hidden ? 'Unhide' : 'Hide'}
+                                            </button>
+                                        </div>
+                                    ) : null}
+                                </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <p className="course-empty-state">No courses are currently visible in this section.</p>
+                    )}
 
                     <div className="course-cta-card">
                         <h3 style={{ marginBottom: '1rem' }}>Ready to Advance Your Career?</h3>
@@ -77,6 +98,35 @@ export default function Diplomas() {
                     </div>
                 </div>
             </section>
+
+            {editingCourse ? (
+                <CourseEditorModal
+                    course={editingCourse}
+                    onClose={() => setEditingCourseId(null)}
+                    onSave={(updates) => updateCourse('diploma', editingCourse.id, updates)}
+                />
+            ) : null}
+
+            {addingCourse ? (
+                <CourseEditorModal
+                    course={addingCourse}
+                    mode="add"
+                    onClose={() => setAddingCourse(null)}
+                    onSave={(updates) => addCourse('diploma', { ...addingCourse, ...updates } as Course)}
+                />
+            ) : null}
+
+            {isAuthenticated ? (
+                <button
+                    type="button"
+                    className="floating-add-course-button"
+                    aria-label="Add course"
+                    onClick={() => setAddingCourse(createEmptyCourse('diploma'))}
+                >
+                    <i className="fas fa-plus"></i>
+                </button>
+            ) : null}
+
             <ScrollTopButton />
         </>
     );

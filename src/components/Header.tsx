@@ -1,11 +1,14 @@
 import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { assetUrl } from '../utils/assets';
+import { useAdminAuth } from '../context/AdminAuthContext';
 
 export default function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [coursesOpen, setCoursesOpen] = useState(false);
     const location = useLocation();
+    const navigate = useNavigate();
+    const { isAuthenticated, logout } = useAdminAuth();
     const logoSize = 135;
 
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
@@ -20,6 +23,11 @@ export default function Header() {
     };
 
     const isActive = (path: string) => location.pathname === path ? 'active' : '';
+    const handleLogout = () => {
+        logout();
+        closeMenu();
+        navigate('/admin');
+    };
 
     return (
         <header className="main-header">
@@ -64,6 +72,13 @@ export default function Header() {
 
                         <li><Link to="/v-care" className={isActive('/v-care')} onClick={closeMenu}>V-Care</Link></li>
                         <li><Link to="/contact" className={isActive('/contact')} onClick={closeMenu}>Contact</Link></li>
+                        {isAuthenticated ? (
+                            <li>
+                                <button type="button" className="btn header-logout-button" onClick={handleLogout}>
+                                    Logout
+                                </button>
+                            </li>
+                        ) : null}
                     </ul>
                 </nav>
             </div>

@@ -9,25 +9,33 @@ import NVQCourses from './pages/NVQCourses';
 import Diplomas from './pages/Diplomas';
 import VCare from './pages/VCare';
 import Contact from './pages/Contact';
+import AdminLogin from './pages/AdminLogin';
+import { AdminAuthProvider } from './context/AdminAuthContext';
+import { CourseCatalogProvider } from './context/CourseCatalogContext';
 
 function App() {
   return (
-    <Router>
-      <ScrollToTop />
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="about" element={<AboutUs />} />
-          {/* 'Courses' overview page removed; navigation uses dropdown links */}
-          <Route path="certificate-courses" element={<CertificateCourses />} />
-          <Route path="advanced-certificate-courses" element={<AdvancedCertificateCourses />} />
-          <Route path="nvq-courses" element={<NVQCourses />} />
-          <Route path="diplomas" element={<Diplomas />} />
-          <Route path="v-care" element={<VCare />} />
-          <Route path="contact" element={<Contact />} />
-        </Route>
-      </Routes>
-    </Router>
+    <AdminAuthProvider>
+      <CourseCatalogProvider>
+        <Router>
+          <ScrollToTop />
+          <Routes>
+            <Route path="/admin" element={<AdminLogin />} />
+            <Route path="/" element={<Layout />}>
+              <Route index element={<Home />} />
+              <Route path="about" element={<AboutUs />} />
+              {/* 'Courses' overview page removed; navigation uses dropdown links */}
+              <Route path="certificate-courses" element={<CertificateCourses />} />
+              <Route path="advanced-certificate-courses" element={<AdvancedCertificateCourses />} />
+              <Route path="nvq-courses" element={<NVQCourses />} />
+              <Route path="diplomas" element={<Diplomas />} />
+              <Route path="v-care" element={<VCare />} />
+              <Route path="contact" element={<Contact />} />
+            </Route>
+          </Routes>
+        </Router>
+      </CourseCatalogProvider>
+    </AdminAuthProvider>
   );
 }
 

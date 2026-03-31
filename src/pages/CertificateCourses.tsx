@@ -1,18 +1,21 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { assetUrl } from '../utils/assets';
 import ScrollTopButton from '../components/ScrollTopButton';
+import CourseEditorModal from '../components/CourseEditorModal';
+import { useAdminAuth } from '../context/AdminAuthContext';
+import { useCourseCatalog } from '../context/CourseCatalogContext';
+import { createEmptyCourse, type Course } from '../data/courseCatalog';
+import { assetUrl } from '../utils/assets';
 
 export default function CertificateCourses() {
-    const courses = [
-        'Basics in Child Psychology',
-        'Basics in Geriatric Psychology',
-        'English for Professionals',
-        'Dementia Care Training',
-        'Basic Nursing Care',
-        'Psychological First Aid',
-        'First Aid',
-        'Understanding AI',
-    ];
+    const { isAuthenticated } = useAdminAuth();
+    const { catalog, addCourse, updateCourse, deleteCourse, toggleHidden } = useCourseCatalog();
+    const [editingCourseId, setEditingCourseId] = useState<string | null>(null);
+    const [addingCourse, setAddingCourse] = useState<Course | null>(null);
+    const courses = isAuthenticated
+        ? catalog.certificate
+        : catalog.certificate.filter((course) => !course.hidden);
+    const editingCourse = catalog.certificate.find((course) => course.id === editingCourseId) || null;
 
     return (
         <>
@@ -34,16 +37,52 @@ export default function CertificateCourses() {
                             <h2>Available Courses</h2>
                         </div>
 
-                        <div className="certificate-course-grid">
-                            {courses.map((course) => (
-                                <div key={course} className="certificate-course-card">
-                                    <div className="certificate-course-icon">
-                                        <i className="fas fa-check"></i>
+                        {courses.length ? (
+                            <div className="certificate-course-grid">
+                                {courses.map((course) => (
+                                    <div
+                                        key={course.id}
+                                        className={`certificate-course-card ${course.hidden ? 'course-card-hidden' : ''}`}
+                                    >
+                                        <div className="certificate-course-icon">
+                                            <i className="fas fa-check"></i>
+                                        </div>
+                                        <div className="certificate-course-copy">
+                                            {course.hidden ? <span className="course-visibility-badge">Hidden</span> : null}
+                                            <p>{course.title}</p>
+                                        </div>
+
+                                        {isAuthenticated ? (
+                                            <div className="course-admin-actions course-admin-actions-inline">
+                                                <button type="button" className="btn course-admin-btn" onClick={() => setEditingCourseId(course.id)}>
+                                                    Edit
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    className="btn course-admin-btn course-admin-btn-danger"
+                                                    onClick={() => {
+                                                        if (window.confirm(`Delete "${course.title}"?`)) {
+                                                            deleteCourse('certificate', course.id);
+                                                        }
+                                                    }}
+                                                >
+                                                    Delete
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    className="btn course-admin-btn course-admin-btn-secondary"
+                                                    onClick={() => toggleHidden('certificate', course.id)}
+                                                >
+                                                    {course.hidden ? 'Unhide' : 'Hide'}
+                                                </button>
+                                            </div>
+                                        ) : null}
                                     </div>
-                                    <p>{course}</p>
-                                </div>
-                            ))}
-                        </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <p className="course-empty-state">No courses are currently visible in this section.</p>
+                        )}
 
                         <div className="course-info-callout">
                             <div className="course-info-icon"><i className="fas fa-circle-info"></i></div>
@@ -54,6 +93,35 @@ export default function CertificateCourses() {
                     </div>
                 </div>
             </section>
+
+            {editingCourse ? (
+                <CourseEditorModal
+                    course={editingCourse}
+                    onClose={() => setEditingCourseId(null)}
+                    onSave={(updates) => updateCourse('certificate', editingCourse.id, updates)}
+                />
+            ) : null}
+
+            {addingCourse ? (
+                <CourseEditorModal
+                    course={addingCourse}
+                    mode="add"
+                    onClose={() => setAddingCourse(null)}
+                    onSave={(updates) => addCourse('certificate', { ...addingCourse, ...updates } as Course)}
+                />
+            ) : null}
+
+            {isAuthenticated ? (
+                <button
+                    type="button"
+                    className="floating-add-course-button"
+                    aria-label="Add course"
+                    onClick={() => setAddingCourse(createEmptyCourse('certificate'))}
+                >
+                    <i className="fas fa-plus"></i>
+                </button>
+            ) : null}
+
             <ScrollTopButton />
         </>
     );

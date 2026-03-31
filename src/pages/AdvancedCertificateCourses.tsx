@@ -1,17 +1,22 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { assetUrl } from '../utils/assets';
 import ScrollTopButton from '../components/ScrollTopButton';
-
-const courses = [
-    { title: 'Advanced Certificate in Psychology', id: 'ACP' },
-    { title: 'Advanced Certificate in Child Psychology', id: 'ACCP' },
-    { title: 'Advanced Certificate in Geriatric Psychology', id: 'ACGP' },
-    { title: 'Advanced Certificate in Human Resource Management', id: 'ACHRM' },
-    { title: 'Advanced Certificate in Marketing Management', id: 'ACMM' },
-    { title: 'Advanced Certificate in Basic Life Support', id: 'ACBLC' },
-];
+import CourseEditorModal from '../components/CourseEditorModal';
+import { useAdminAuth } from '../context/AdminAuthContext';
+import { useCourseCatalog } from '../context/CourseCatalogContext';
+import { createEmptyCourse, type Course, type DetailedCourse } from '../data/courseCatalog';
+import { assetUrl } from '../utils/assets';
 
 export default function AdvancedCertificateCourses() {
+    const { isAuthenticated } = useAdminAuth();
+    const { catalog, addCourse, updateCourse, deleteCourse, toggleHidden } = useCourseCatalog();
+    const [editingCourseId, setEditingCourseId] = useState<string | null>(null);
+    const [addingCourse, setAddingCourse] = useState<Course | null>(null);
+    const courses = (isAuthenticated
+        ? catalog['advanced-certificate']
+        : catalog['advanced-certificate'].filter((course) => !course.hidden)) as DetailedCourse[];
+    const editingCourse = (catalog['advanced-certificate'].find((course) => course.id === editingCourseId) || null) as DetailedCourse | null;
+
     return (
         <>
             <section className="page-header" style={{
@@ -27,39 +32,72 @@ export default function AdvancedCertificateCourses() {
 
             <section className="inner-page-content" style={{ padding: 'var(--section-spacing) 0' }}>
                 <div className="container">
-                    <div className="course-cards-grid">
-                        {courses.map((course) => (
-                            <div key={course.id} className="course-card">
-                                <h3 className="course-card-title">
-                                    {course.title}
-                                    <br />
-                                    <span className="course-card-id">(COURSE ID: {course.id})</span>
-                                </h3>
-                                <ul className="course-card-list">
-                                    <li><strong>Level:</strong> Advanced Certificate Programme</li>
-                                    <li><strong>Method:</strong> Full Time</li>
-                                    <li><strong>Medium:</strong> English & Sinhala</li>
-                                    <li><strong>Duration:</strong> 03 Months</li>
-                                    <li className="spaced">
-                                        <strong>Entry Requirements:</strong>
-                                        <ul className="nested-list">
-                                            <li>G.C.E. A/L - 03 Passes, OR</li>
-                                            <li>G.C.E. O/L six passes plus one year working experience OR</li>
-                                            <li>Students following any other professional qualification.</li>
-                                        </ul>
-                                    </li>
-                                    <li className="spaced">
-                                        <strong>Course Structure and Modules:</strong><br />
-                                        <span className="muted">For further details, contact us. +94702 88 99 00</span>
-                                    </li>
-                                    <li className="spaced">
-                                        <strong>Programme Fees & Investment:</strong><br />
-                                        <span className="muted">LOCAL PARTICIPANT COURSE FEE - LKR 30,000 (payable in 3 installments)</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        ))}
-                    </div>
+                    {courses.length ? (
+                        <div className="course-cards-grid">
+                            {courses.map((course) => (
+                                <div key={course.id} className={`course-card ${course.hidden ? 'course-card-hidden' : ''}`}>
+                                    {course.hidden ? <span className="course-visibility-badge">Hidden</span> : null}
+                                    <h3 className="course-card-title">
+                                        {course.title}
+                                        {course.courseId ? (
+                                            <>
+                                                <br />
+                                                <span className="course-card-id">(COURSE ID: {course.courseId})</span>
+                                            </>
+                                        ) : null}
+                                    </h3>
+                                    <ul className="course-card-list">
+                                        <li><strong>Level:</strong> {course.level}</li>
+                                        <li><strong>Method:</strong> {course.method}</li>
+                                        <li><strong>Medium:</strong> {course.medium}</li>
+                                        <li><strong>Duration:</strong> {course.duration}</li>
+                                        <li className="spaced">
+                                            <strong>Entry Requirements:</strong>
+                                            <ul className="nested-list">
+                                                {course.entryRequirements.map((item: string) => <li key={item}>{item}</li>)}
+                                            </ul>
+                                        </li>
+                                        <li className="spaced">
+                                            <strong>Course Structure and Modules:</strong><br />
+                                            <span className="muted">{course.modulesInfo}</span>
+                                        </li>
+                                        <li className="spaced">
+                                            <strong>Programme Fees & Investment:</strong><br />
+                                            <span className="muted">{course.feesInfo}</span>
+                                        </li>
+                                    </ul>
+
+                                    {isAuthenticated ? (
+                                        <div className="course-admin-actions">
+                                            <button type="button" className="btn course-admin-btn" onClick={() => setEditingCourseId(course.id)}>
+                                                Edit
+                                            </button>
+                                            <button
+                                                type="button"
+                                                className="btn course-admin-btn course-admin-btn-danger"
+                                                onClick={() => {
+                                                    if (window.confirm(`Delete "${course.title}"?`)) {
+                                                        deleteCourse('advanced-certificate', course.id);
+                                                    }
+                                                }}
+                                            >
+                                                Delete
+                                            </button>
+                                            <button
+                                                type="button"
+                                                className="btn course-admin-btn course-admin-btn-secondary"
+                                                onClick={() => toggleHidden('advanced-certificate', course.id)}
+                                            >
+                                                {course.hidden ? 'Unhide' : 'Hide'}
+                                            </button>
+                                        </div>
+                                    ) : null}
+                                </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <p className="course-empty-state">No courses are currently visible in this section.</p>
+                    )}
 
                     <div className="course-cta-card">
                         <h3 style={{ marginBottom: '1rem' }}>Ready to Take the Next Step?</h3>
@@ -68,6 +106,35 @@ export default function AdvancedCertificateCourses() {
                     </div>
                 </div>
             </section>
+
+            {editingCourse ? (
+                <CourseEditorModal
+                    course={editingCourse}
+                    onClose={() => setEditingCourseId(null)}
+                    onSave={(updates) => updateCourse('advanced-certificate', editingCourse.id, updates)}
+                />
+            ) : null}
+
+            {addingCourse ? (
+                <CourseEditorModal
+                    course={addingCourse}
+                    mode="add"
+                    onClose={() => setAddingCourse(null)}
+                    onSave={(updates) => addCourse('advanced-certificate', { ...addingCourse, ...updates } as Course)}
+                />
+            ) : null}
+
+            {isAuthenticated ? (
+                <button
+                    type="button"
+                    className="floating-add-course-button"
+                    aria-label="Add course"
+                    onClick={() => setAddingCourse(createEmptyCourse('advanced-certificate'))}
+                >
+                    <i className="fas fa-plus"></i>
+                </button>
+            ) : null}
+
             <ScrollTopButton />
         </>
     );
