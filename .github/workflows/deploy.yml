@@ -1,0 +1,74 @@
+name: Deploy CISS to Namecheap
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: namecheap-production
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build website
+        run: npm run build
+
+      - name: Install FTP backup tool
+        run: sudo apt-get update && sudo apt-get install --yes lftp
+
+      - name: Back up current live website
+        shell: bash
+        env:
+          FTP_SERVER: ftp.ciss.lk
+          FTP_USERNAME: sandun2@ciss.lk
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          set -euo pipefail
+          BACKUP_NAME="$(TZ=Asia/Colombo date +%Y%m%d)-v${GITHUB_RUN_NUMBER}-BKP"
+          BACKUP_LOCAL="$RUNNER_TEMP/current-live-site"
+          mkdir -p "$BACKUP_LOCAL"
+
+          lftp -u "$FTP_USERNAME","$FTP_PASSWORD" "$FTP_SERVER" <<LFTP_DOWNLOAD
+          set cmd:fail-exit yes
+          set ftp:ssl-allow yes
+          mirror --parallel=4 --exclude-glob "*-BKP" --exclude-glob "*-BKP/**" / "$BACKUP_LOCAL"
+          bye
+          LFTP_DOWNLOAD
+
+          if [ -f "$BACKUP_LOCAL/.htaccess" ]; then
+            mv "$BACKUP_LOCAL/.htaccess" "$BACKUP_LOCAL/.htaccess.original"
+          fi
+          printf 'Require all denied\n' > "$BACKUP_LOCAL/.htaccess"
+
+          lftp -u "$FTP_USERNAME","$FTP_PASSWORD" "$FTP_SERVER" <<LFTP_UPLOAD
+          set cmd:fail-exit yes
+          set ftp:ssl-allow yes
+          mirror --reverse --parallel=4 "$BACKUP_LOCAL" "/$BACKUP_NAME"
+          bye
+          LFTP_UPLOAD
+
+      - name: Deploy dist to Namecheap
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
+        with:
+          server: ftp.ciss.lk
+          username: sandun2@ciss.lk
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./dist/
+          server-dir: /
