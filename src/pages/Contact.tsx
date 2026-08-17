@@ -143,51 +143,6 @@ export default function Contact() {
             color: #991B1B;
             border: 1px solid #FECACA;
         }
-        .map-placeholder {
-            width: 100%;
-            height: 300px;
-            background-color: #E5E7EB;
-            border-radius: var(--border-radius-lg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-light);
-            font-size: 1.25rem;
-            margin-top: 3rem;
-            box-shadow: var(--shadow-sm);
-            border: 2px dashed #D1D5DB;
-        }
-        .contact-map-section {
-            padding: 0 0 var(--section-spacing);
-            background-color: var(--secondary-color);
-        }
-        .contact-map-card {
-            max-width: 760px;
-            margin: 0 auto;
-            background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
-            border: 1px solid rgba(46, 90, 255, 0.08);
-            border-radius: var(--border-radius-lg);
-            box-shadow: 0 14px 34px rgba(11, 22, 45, 0.08);
-            overflow: hidden;
-        }
-        .contact-map-header {
-            padding: 1.25rem 1.5rem 0.75rem;
-            text-align: center;
-        }
-        .contact-map-header h3 {
-            margin-bottom: 0.35rem;
-            color: var(--heading-blue);
-        }
-        .contact-map-header p {
-            margin: 0;
-            color: var(--text-light);
-        }
-        .contact-map-frame {
-            width: 100%;
-            height: 280px;
-            border: 0;
-            display: block;
-        }
         @media (max-width: 768px) {
             .contact-grid {
                 grid-template-columns: 1fr;
@@ -205,16 +160,6 @@ export default function Contact() {
             .contact-info-card i {
                 font-size: 1.5rem;
             }
-            .map-placeholder {
-                height: 220px;
-                font-size: 1rem;
-            }
-            .contact-map-card {
-                max-width: 100%;
-            }
-            .contact-map-frame {
-                height: 240px;
-            }
         }
         @media (max-width: 480px) {
             .contact-info-panel,
@@ -227,12 +172,6 @@ export default function Contact() {
             .contact-info-card p {
                 font-size: 0.9rem !important;
                 line-height: 1.6;
-            }
-            .contact-map-header {
-                padding: 1rem 1rem 0.65rem;
-            }
-            .contact-map-frame {
-                height: 220px;
             }
         }
       `}</style>
@@ -322,22 +261,6 @@ export default function Contact() {
                 </div>
             </section>
 
-            <section className="contact-map-section">
-                <div className="container">
-                    <div className="contact-map-card">
-                        <div className="contact-map-header">
-                            <h3>Find Us</h3>
-                        </div>
-                        <iframe
-                            className="contact-map-frame"
-                            title="CISS Location Map"
-                            loading="lazy"
-                            referrerPolicy="no-referrer-when-downgrade"
-                            src="https://www.google.com/maps?q=No%20523%2F3B%2C%20Madagodalanda%20Road%2C%20Athurugiriya%2C%20Sri%20Lanka&z=15&output=embed"
-                        ></iframe>
-                    </div>
-                </div>
-            </section>
         </>
     );
 }

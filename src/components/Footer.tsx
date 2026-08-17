@@ -20,6 +20,7 @@ export default function Footer() {
                                 <li><Link to="/">Home</Link></li>
                                 <li><Link to="/about">About Us</Link></li>
                                 <li><Link to="/v-care">V-Care</Link></li>
+                                <li><Link to="/elevate">Elevate</Link></li>
                                 <li><Link to="/contact">Contact Us</Link></li>
                             </ul>
                         </div>
@@ -38,14 +39,6 @@ export default function Footer() {
                     <div className="footer-col footer-contact-column">
                         <h3 className="footer-heading">Contact</h3>
                         <div className="footer-contact-cards">
-                            <div className="footer-contact-card">
-                                <div className="contact-icon-wrapper"><i className="fas fa-map-marker-alt"></i></div>
-                                <div className="contact-details">
-                                    <span className="contact-label">Address</span>
-                                    <p>No 523/3B, Madagodalanda Road, Athurugiriya, Sri Lanka.</p>
-                                </div>
-                            </div>
-
                             <div className="footer-contact-card">
                                 <div className="contact-icon-wrapper"><i className="fas fa-phone-alt"></i></div>
                                 <div className="contact-details">

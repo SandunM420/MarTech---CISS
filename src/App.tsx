@@ -8,6 +8,7 @@ import AdvancedCertificateCourses from './pages/AdvancedCertificateCourses';
 import NVQCourses from './pages/NVQCourses';
 import Diplomas from './pages/Diplomas';
 import VCare from './pages/VCare';
+import Elevate from './pages/Elevate';
 import Contact from './pages/Contact';
 import AdminLogin from './pages/AdminLogin';
 import { AdminAuthProvider } from './context/AdminAuthContext';
@@ -30,6 +31,7 @@ function App() {
               <Route path="nvq-courses" element={<NVQCourses />} />
               <Route path="diplomas" element={<Diplomas />} />
               <Route path="v-care" element={<VCare />} />
+              <Route path="elevate" element={<Elevate />} />
               <Route path="contact" element={<Contact />} />
             </Route>
           </Routes>

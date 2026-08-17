@@ -71,6 +71,7 @@ export default function Header() {
                         </li>
 
                         <li><Link to="/v-care" className={isActive('/v-care')} onClick={closeMenu}>V-Care</Link></li>
+                        <li><Link to="/elevate" className={isActive('/elevate')} onClick={closeMenu}>Elevate</Link></li>
                         <li><Link to="/contact" className={isActive('/contact')} onClick={closeMenu}>Contact</Link></li>
                         {isAuthenticated ? (
                             <li>
