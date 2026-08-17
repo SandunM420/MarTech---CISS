@@ -1,0 +1,43 @@
+# SPA routing: the app uses react-router's BrowserRouter, so every path that
+# isn't a real file on disk must be served index.html. Without this, direct
+# visits and refreshes on /elevate, /contact, etc. return 404.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Leave real files and directories alone (assets, images, favicon).
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Everything else falls through to the SPA shell.
+  RewriteRule ^ index.html [L]
+</IfModule>
+
+# Compress text responses. Images are already compressed; leave them out.
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css text/xml
+  AddOutputFilterByType DEFLATE application/javascript application/json
+  AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
+
+<IfModule mod_headers.c>
+  # Vite fingerprints filenames in /assets, so those are safe to cache forever.
+  <FilesMatch "\.(js|css|woff2?)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+
+  # index.html must never be cached long: it carries the hashed asset names,
+  # so a stale copy would point browsers at files from an older deploy.
+  <FilesMatch "^index\.html$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+</IfModule>
+
+# Images change rarely but aren't fingerprinted; a week is a safe middle ground.
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/jpeg "access plus 1 week"
+  ExpiresByType image/png "access plus 1 week"
+  ExpiresByType image/svg+xml "access plus 1 week"
+</IfModule>
