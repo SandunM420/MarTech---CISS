@@ -36,7 +36,11 @@ jobs:
       - name: Back up current live website
         shell: bash
         env:
-          FTP_SERVER: ftp.ciss.lk
+          # The shared cert is issued for *.web-hosting.com, so connecting as
+          # ftp.ciss.lk fails TLS hostname verification. Use the server's own
+          # name (Namecheap: Hosting List > Manage > Server Name) so FTPS can
+          # verify properly instead of switching verification off.
+          FTP_SERVER: server312-2.web-hosting.com
           FTP_USERNAME: sandun2@ciss.lk
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
         run: |
@@ -67,8 +71,11 @@ jobs:
       - name: Deploy dist to Namecheap
         uses: SamKirkland/FTP-Deploy-Action@v4.3.6
         with:
-          server: ftp.ciss.lk
+          server: server312-2.web-hosting.com
           username: sandun2@ciss.lk
           password: ${{ secrets.FTP_PASSWORD }}
+          # Defaults to plain ftp, which sends the password in cleartext.
+          # The hostname above matches the certificate, so encrypt this too.
+          protocol: ftps
           local-dir: ./dist/
           server-dir: /
