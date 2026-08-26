@@ -1,12 +1,14 @@
-import { assetUrl } from '../utils/assets';
 import ContactBanner from '../components/ContactBanner';
+import { useSiteContent } from '../context/SiteContentContext';
 
 export default function VCare() {
+    const { image } = useSiteContent();
+
     return (
         <>
             <section
                 className="page-header vcare-hero"
-                style={{ backgroundImage: `url(${assetUrl('images/vcare-hero.jpg')})` }}
+                style={{ backgroundImage: `url(${image('vcare.hero')})` }}
             >
                 <div className="container">
                     <h1>V-Care Wellness Initiative</h1>

@@ -5,10 +5,11 @@ import CourseEditorModal from '../components/CourseEditorModal';
 import { useAdminAuth } from '../context/AdminAuthContext';
 import { useCourseCatalog } from '../context/CourseCatalogContext';
 import { createEmptyCourse, type Course } from '../data/courseCatalog';
-import { assetUrl } from '../utils/assets';
+import { useSiteContent } from '../context/SiteContentContext';
 
 export default function CertificateCourses() {
     const { isAuthenticated } = useAdminAuth();
+    const { image } = useSiteContent();
     const { catalog, addCourse, updateCourse, deleteCourse, toggleHidden } = useCourseCatalog();
     const [editingCourseId, setEditingCourseId] = useState<string | null>(null);
     const [addingCourse, setAddingCourse] = useState<Course | null>(null);
@@ -20,7 +21,7 @@ export default function CertificateCourses() {
     return (
         <>
             <section className="page-header" style={{
-                backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(${assetUrl('images/certificate-header-bg-2.jpg')})`,
+                backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(${image('certificate.header')})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center'
             }}>

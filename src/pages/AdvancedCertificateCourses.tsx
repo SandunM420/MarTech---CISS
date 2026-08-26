@@ -5,10 +5,12 @@ import CourseEditorModal from '../components/CourseEditorModal';
 import { useAdminAuth } from '../context/AdminAuthContext';
 import { useCourseCatalog } from '../context/CourseCatalogContext';
 import { createEmptyCourse, type Course, type DetailedCourse } from '../data/courseCatalog';
-import { assetUrl } from '../utils/assets';
+import { useSiteContent } from '../context/SiteContentContext';
+import RichContent from '../components/RichContent';
 
 export default function AdvancedCertificateCourses() {
     const { isAuthenticated } = useAdminAuth();
+    const { image } = useSiteContent();
     const { catalog, addCourse, updateCourse, deleteCourse, toggleHidden } = useCourseCatalog();
     const [editingCourseId, setEditingCourseId] = useState<string | null>(null);
     const [addingCourse, setAddingCourse] = useState<Course | null>(null);
@@ -20,7 +22,7 @@ export default function AdvancedCertificateCourses() {
     return (
         <>
             <section className="page-header" style={{
-                backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(${assetUrl('images/advanced-certificate-header-bg.jpg')})`,
+                backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(${image('advanced-certificate.header')})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center'
             }}>
@@ -54,16 +56,16 @@ export default function AdvancedCertificateCourses() {
                                         <li className="spaced">
                                             <strong>Entry Requirements:</strong>
                                             <ul className="nested-list">
-                                                {course.entryRequirements.map((item: string) => <li key={item}>{item}</li>)}
+                                                {course.entryRequirements.map((item: string, index: number) => <li key={`${course.id}-requirement-${index}`}><RichContent html={item} /></li>)}
                                             </ul>
                                         </li>
                                         <li className="spaced">
                                             <strong>Course Structure and Modules:</strong><br />
-                                            <span className="muted">{course.modulesInfo}</span>
+                                            <RichContent className="muted rich-content" html={course.modulesInfo} />
                                         </li>
                                         <li className="spaced">
                                             <strong>Programme Fees & Investment:</strong><br />
-                                            <span className="muted">{course.feesInfo}</span>
+                                            <RichContent className="muted rich-content" html={course.feesInfo} />
                                         </li>
                                     </ul>
 

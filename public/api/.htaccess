@@ -1,0 +1,24 @@
+# The API is a front controller: every /api/* request goes to index.php, which
+# dispatches on path and method. Without this, Apache would 404 on /api/courses
+# because no such file exists on disk.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /api/
+
+  # Real files (index.php itself) are served directly.
+  RewriteCond %{REQUEST_FILENAME} -f
+  RewriteRule ^index\.php$ - [L]
+
+  RewriteRule ^ index.php [QSA,L]
+</IfModule>
+
+# Belt and braces: even though the data directory lives outside public_html,
+# refuse to serve PHP internals or stray json if anything ever lands here.
+<FilesMatch "\.(json|log|ini)$">
+  Require all denied
+</FilesMatch>
+
+# API responses must never be cached - admin edits have to show up immediately.
+<IfModule mod_headers.c>
+  Header always set Cache-Control "no-store, no-cache, must-revalidate"
+</IfModule>

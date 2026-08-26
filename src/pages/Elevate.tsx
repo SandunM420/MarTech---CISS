@@ -1,6 +1,6 @@
 import ContactBanner from '../components/ContactBanner';
 import ScrollTopButton from '../components/ScrollTopButton';
-import { assetUrl } from '../utils/assets';
+import { useSiteContent } from '../context/SiteContentContext';
 import {
     additionalServices,
     approachSteps,
@@ -11,11 +11,13 @@ import {
 } from '../data/elevateContent';
 
 export default function Elevate() {
+    const { image } = useSiteContent();
+
     return (
         <>
             <section
                 className="page-header elevate-hero"
-                style={{ backgroundImage: `url(${assetUrl('images/certificate-header-bg-2.jpg')})` }}
+                style={{ backgroundImage: `url(${image('elevate.header')})` }}
             >
                 <div className="container">
                     <p className="elevate-hero-eyebrow">CISS Corporate Training Program</p>

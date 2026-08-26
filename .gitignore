@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Admin API local development
+public/api/config.local.php
+.ciss-data-dev
+public/uploads

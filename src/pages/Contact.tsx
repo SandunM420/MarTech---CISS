@@ -1,8 +1,11 @@
 import { useState } from 'react';
 import type { ChangeEvent, FormEvent } from 'react';
-import { assetUrl } from '../utils/assets';
+import { api } from '../lib/api';
+import { useSiteContent } from '../context/SiteContentContext';
+import { telHref } from '../data/siteDefaults';
 
 export default function Contact() {
+    const { image, settings } = useSiteContent();
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -29,24 +32,12 @@ export default function Contact() {
         setSubmitStatus(null);
 
         try {
-            const response = await fetch('https://formsubmit.co/ajax/info@ciss.lk', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json',
-                },
-                body: JSON.stringify({
-                    name: formData.name,
-                    email: formData.email,
-                    message: formData.message,
-                    _subject: `New contact form message from ${formData.name}`,
-                    _captcha: 'false',
-                }),
+            await api.inquiries.submit({
+                name: formData.name,
+                email: formData.email,
+                message: formData.message,
+                subject: `Website inquiry from ${formData.name}`,
             });
-
-            if (!response.ok) {
-                throw new Error('Form submission failed');
-            }
 
             setSubmitStatus({
                 type: 'success',
@@ -57,10 +48,12 @@ export default function Contact() {
                 email: '',
                 message: '',
             });
-        } catch {
+        } catch (error) {
             setSubmitStatus({
                 type: 'error',
-                message: 'We could not send your message right now. Please try again in a moment.',
+                message: error instanceof Error
+                    ? error.message
+                    : 'We could not send your message right now. Please try again in a moment.',
             });
         } finally {
             setIsSubmitting(false);
@@ -179,7 +172,7 @@ export default function Contact() {
             {/* Page Header */}
             <section
                 className="page-header contact-hero"
-                style={{ backgroundImage: `url(${assetUrl('images/contact-hero.jpg')})` }}
+                style={{ backgroundImage: `url(${image('contact.hero')})` }}
             >
                 <div className="container">
                     <h1>Contact Us</h1>
@@ -201,7 +194,7 @@ export default function Contact() {
                                     <i className="fas fa-map-marker-alt"></i>
                                     <div>
                                         <h3 style={{ fontSize: '1rem', marginBottom: '0.35rem', color: 'var(--text-dark)' }}>Our Location</h3>
-                                        <p style={{ margin: 0, color: 'var(--text-light)', fontSize: '1rem', lineHeight: 1.8 }}>Colombo Institute of Scientific Studies (Pvt) Ltd.<br />No 523/3B, Madagodalanda Road, Athurugiriya. Sri Lanka.</p>
+                                        <p style={{ margin: 0, color: 'var(--text-light)', fontSize: '1rem', lineHeight: 1.8 }}>{settings.siteName}<br />{settings.address}</p>
                                     </div>
                                 </div>
 
@@ -209,7 +202,7 @@ export default function Contact() {
                                     <i className="fas fa-phone-alt"></i>
                                     <div>
                                         <h3 style={{ fontSize: '1rem', marginBottom: '0.35rem', color: 'var(--text-dark)' }}>Phone</h3>
-                                        <p style={{ margin: 0, color: 'var(--text-light)', fontSize: '1rem', lineHeight: 1.8 }}>+94702 88 99 00</p>
+                                        <p style={{ margin: 0, color: 'var(--text-light)', fontSize: '1rem', lineHeight: 1.8 }}><a href={telHref(settings)}>{settings.phoneDisplay}</a></p>
                                     </div>
                                 </div>
 
@@ -217,7 +210,7 @@ export default function Contact() {
                                     <i className="fas fa-envelope"></i>
                                     <div>
                                         <h3 style={{ fontSize: '1rem', marginBottom: '0.35rem', color: 'var(--text-dark)' }}>Email</h3>
-                                        <p style={{ margin: 0, color: 'var(--text-light)', fontSize: '1rem', lineHeight: 1.8 }}>info@ciss.lk</p>
+                                        <p style={{ margin: 0, color: 'var(--text-light)', fontSize: '1rem', lineHeight: 1.8 }}><a href={`mailto:${settings.email}`}>{settings.email}</a></p>
                                     </div>
                                 </div>
                             </div>
