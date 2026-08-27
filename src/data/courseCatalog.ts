@@ -1,3 +1,5 @@
+import { defaultSettings } from './siteDefaults';
+
 export type CourseCategory = 'certificate' | 'advanced-certificate' | 'nvq' | 'diploma';
 
 type BaseCourse = {
@@ -49,7 +51,7 @@ const advancedCourseDefaults = {
   medium: 'English & Sinhala',
   duration: '03 Months',
   entryRequirements: advancedEntryRequirements,
-  modulesInfo: 'For further details, contact us. +94702 88 99 00',
+  modulesInfo: `For further details, contact us. ${defaultSettings.phoneDisplay}`,
   feesInfo: 'LOCAL PARTICIPANT COURSE FEE - LKR 30,000 (payable in 3 installments)',
   hidden: false,
 } as const;
@@ -57,10 +59,10 @@ const advancedCourseDefaults = {
 const nvqCourseDefaults = {
   method: 'Full Time/ Part Time',
   medium: 'English & Sinhala',
-  duration: 'For further details, contact us. +947 02 88 99 00',
+  duration: `For further details, contact us. ${defaultSettings.phoneDisplay}`,
   entryRequirements: nvqEntryRequirements,
-  modulesInfo: 'For further details, contact us. +947 02 88 99 00',
-  feesInfo: 'For further details, contact us. +947 02 88 99 00 (Payable in 3 installments)',
+  modulesInfo: `For further details, contact us. ${defaultSettings.phoneDisplay}`,
+  feesInfo: `For further details, contact us. ${defaultSettings.phoneDisplay} (Payable in 3 installments)`,
   hidden: false,
 } as const;
 
@@ -68,10 +70,10 @@ const diplomaCourseDefaults = {
   level: 'NVQ Level 5/6 Certificate Programme',
   method: 'Full Time/ Part Time',
   medium: 'English & Sinhala',
-  duration: 'For further details, contact us. +947 02 88 99 00',
+  duration: `For further details, contact us. ${defaultSettings.phoneDisplay}`,
   entryRequirements: diplomaEntryRequirements,
-  modulesInfo: 'For further details, contact us. +947 02 88 99 00',
-  feesInfo: 'For further details, contact us. +947 02 88 99 00 (Payable in 3 installments)',
+  modulesInfo: `For further details, contact us. ${defaultSettings.phoneDisplay}`,
+  feesInfo: `For further details, contact us. ${defaultSettings.phoneDisplay} (Payable in 3 installments)`,
   hidden: false,
 } as const;
 

@@ -1,11 +1,13 @@
-import { assetUrl } from '../utils/assets';
+import { useSiteContent } from '../context/SiteContentContext';
 
 export default function AboutUs() {
+    const { image } = useSiteContent();
+
     return (
         <>
             <section
                 className="page-header about-hero"
-                style={{ backgroundImage: `url(${assetUrl('images/about-hero.jpg')})` }}
+                style={{ backgroundImage: `url(${image('about.hero')})` }}
             >
                 <div className="container">
                     <h1>About CISS</h1>
@@ -106,7 +108,7 @@ export default function AboutUs() {
                                     </div>
 
                                     <aside className="values-media">
-                                        <img src={assetUrl('images/values-side.jpg')} alt="Learners collaborating in a group session" />
+                                        <img src={image('about.values-side')} alt="Learners collaborating in a group session" />
                                     </aside>
                                 </div>
                             </div>

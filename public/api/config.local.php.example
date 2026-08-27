@@ -1,0 +1,9 @@
+<?php
+/**
+ * Copy to config.local.php and adjust. Gitignored - never deployed.
+ * Used for local development, where there is no /home/<account> layout.
+ */
+
+declare(strict_types=1);
+
+define('CISS_DATA_DIR', __DIR__ . '/../../.ciss-data-dev');

@@ -1,94 +1,138 @@
-import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
+/* eslint-disable react-refresh/only-export-components */
+import {
+    createContext,
+    useCallback,
+    useContext,
+    useEffect,
+    useMemo,
+    useState,
+    type ReactNode,
+} from 'react';
+import { api, ApiError, type AdminUser } from '../lib/api';
+
+/**
+ * Admin authentication, backed by a server session.
+ *
+ * This replaces an earlier version that compared the username and password
+ * against two constants in this file. Those constants were compiled into the
+ * JavaScript bundle, so they shipped to every visitor and were readable with
+ * view-source; the "session" was a localStorage flag any visitor could set.
+ *
+ * Now the password only exists as a hash in a file outside the web root, and
+ * the browser holds nothing but an HttpOnly cookie it cannot read. Crucially,
+ * `isAuthenticated` here only controls what the UI offers - the API enforces
+ * authorisation on every write regardless of what the client believes.
+ */
 
 type AdminAuthContextValue = {
-  isAuthenticated: boolean;
-  login: (username: string, password: string) => boolean;
-  logout: () => void;
+    user: AdminUser | null;
+    isAuthenticated: boolean;
+    /** True until the initial session check settles. */
+    checking: boolean;
+    login: (username: string, password: string) => Promise<{ ok: true } | { ok: false; error: string }>;
+    logout: () => Promise<void>;
+    changePassword: (
+        currentPassword: string,
+        newPassword: string,
+    ) => Promise<{ ok: true } | { ok: false; error: string }>;
+    /** Re-checks the session; call after a 401 from any admin action. */
+    revalidate: () => Promise<void>;
 };
-
-const ADMIN_USERNAME = 'Vicha';
-const ADMIN_PASSWORD = 'Vicha@123';
-const ADMIN_AUTH_STORAGE_KEY = 'admin-authenticated';
-const ADMIN_AUTH_EXPIRY_KEY = 'admin-auth-expires-at';
-const SESSION_DURATION_MS = 30 * 60 * 1000;
 
 const AdminAuthContext = createContext<AdminAuthContextValue | undefined>(undefined);
 
 export function AdminAuthProvider({ children }: { children: ReactNode }) {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [user, setUser] = useState<AdminUser | null>(null);
+    const [checking, setChecking] = useState(true);
 
-  useEffect(() => {
-    const storedValue = window.localStorage.getItem(ADMIN_AUTH_STORAGE_KEY);
-    const storedExpiry = window.localStorage.getItem(ADMIN_AUTH_EXPIRY_KEY);
-    const expiresAt = storedExpiry ? Number(storedExpiry) : 0;
-    const isSessionValid = storedValue === 'true' && expiresAt > Date.now();
+    const revalidate = useCallback(async () => {
+        try {
+            setUser(await api.auth.me());
+        } catch {
+            // A failed check means no usable session, whatever the cause.
+            setUser(null);
+        } finally {
+            setChecking(false);
+        }
+    }, []);
 
-    if (!isSessionValid) {
-      window.localStorage.removeItem(ADMIN_AUTH_STORAGE_KEY);
-      window.localStorage.removeItem(ADMIN_AUTH_EXPIRY_KEY);
-    }
+    useEffect(() => {
+        void revalidate();
+    }, [revalidate]);
 
-    setIsAuthenticated(isSessionValid);
-  }, []);
-
-  useEffect(() => {
-    if (!isAuthenticated) {
-      return undefined;
-    }
-
-    const storedExpiry = window.localStorage.getItem(ADMIN_AUTH_EXPIRY_KEY);
-    const expiresAt = storedExpiry ? Number(storedExpiry) : 0;
-    const remainingTime = expiresAt - Date.now();
-
-    if (remainingTime <= 0) {
-      window.localStorage.removeItem(ADMIN_AUTH_STORAGE_KEY);
-      window.localStorage.removeItem(ADMIN_AUTH_EXPIRY_KEY);
-      setIsAuthenticated(false);
-      return undefined;
-    }
-
-    const timeoutId = window.setTimeout(() => {
-      window.localStorage.removeItem(ADMIN_AUTH_STORAGE_KEY);
-      window.localStorage.removeItem(ADMIN_AUTH_EXPIRY_KEY);
-      setIsAuthenticated(false);
-    }, remainingTime);
-
-    return () => window.clearTimeout(timeoutId);
-  }, [isAuthenticated]);
-
-  const value = useMemo<AdminAuthContextValue>(
-    () => ({
-      isAuthenticated,
-      login: (username, password) => {
-        const isValidLogin = username === ADMIN_USERNAME && password === ADMIN_PASSWORD;
-
-        if (isValidLogin) {
-          const expiresAt = Date.now() + SESSION_DURATION_MS;
-          window.localStorage.setItem(ADMIN_AUTH_STORAGE_KEY, 'true');
-          window.localStorage.setItem(ADMIN_AUTH_EXPIRY_KEY, String(expiresAt));
-          setIsAuthenticated(true);
+    useEffect(() => {
+        if (!user?.expiresAt) {
+            return undefined;
         }
 
-        return isValidLogin;
-      },
-      logout: () => {
-        window.localStorage.removeItem(ADMIN_AUTH_STORAGE_KEY);
-        window.localStorage.removeItem(ADMIN_AUTH_EXPIRY_KEY);
-        setIsAuthenticated(false);
-      },
-    }),
-    [isAuthenticated],
-  );
+        // Sessions slide forward on each request, so this only fires when the
+        // tab has genuinely sat idle to the expiry point.
+        const remaining = user.expiresAt * 1000 - Date.now();
 
-  return <AdminAuthContext.Provider value={value}>{children}</AdminAuthContext.Provider>;
+        if (remaining <= 0) {
+            setUser(null);
+            return undefined;
+        }
+
+        const timeout = window.setTimeout(() => void revalidate(), remaining);
+
+        return () => window.clearTimeout(timeout);
+    }, [user, revalidate]);
+
+    const value = useMemo<AdminAuthContextValue>(
+        () => ({
+            user,
+            isAuthenticated: user !== null,
+            checking,
+            login: async (username, password) => {
+                try {
+                    setUser(await api.auth.login(username.trim(), password));
+                    return { ok: true };
+                } catch (error) {
+                    const message =
+                        error instanceof ApiError && error.status === 0
+                            ? 'Could not reach the server. Check your connection and try again.'
+                            : error instanceof Error
+                              ? error.message
+                              : 'Sign-in failed.';
+
+                    return { ok: false, error: message };
+                }
+            },
+            logout: async () => {
+                try {
+                    await api.auth.logout();
+                } finally {
+                    // Clear locally even if the request failed - the user asked
+                    // to be signed out, so the UI must reflect that.
+                    setUser(null);
+                }
+            },
+            changePassword: async (currentPassword, newPassword) => {
+                try {
+                    await api.auth.changePassword(currentPassword, newPassword);
+                    return { ok: true };
+                } catch (error) {
+                    return {
+                        ok: false,
+                        error: error instanceof Error ? error.message : 'Could not change the password.',
+                    };
+                }
+            },
+            revalidate,
+        }),
+        [user, checking, revalidate],
+    );
+
+    return <AdminAuthContext.Provider value={value}>{children}</AdminAuthContext.Provider>;
 }
 
 export function useAdminAuth() {
-  const context = useContext(AdminAuthContext);
+    const context = useContext(AdminAuthContext);
 
-  if (!context) {
-    throw new Error('useAdminAuth must be used within an AdminAuthProvider');
-  }
+    if (!context) {
+        throw new Error('useAdminAuth must be used within an AdminAuthProvider');
+    }
 
-  return context;
+    return context;
 }

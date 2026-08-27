@@ -6,6 +6,32 @@ backup of the current live site first.
 
 You do not need to build or upload anything by hand.
 
+## Admin portal first-time setup
+
+The website now includes a server-backed admin portal at `/admin/login`. The
+frontend and PHP API deploy with the normal workflow, but the first account and
+private data directory are deliberately created on the server rather than kept
+in Git.
+
+1. In cPanel File Manager, create `ciss-data` beside `public_html` (not inside
+   it) and make sure the hosting account can write to it.
+2. In cPanel Terminal, run:
+
+   ```bash
+   php public_html/api/tools/init-admin.php --username=admin
+   ```
+
+3. Save the generated password immediately; only its hash is stored and the
+   password is printed once.
+4. Visit `https://ciss.lk/admin/login`, sign in, and check **Account → System
+   status**. Private data storage and image upload storage should both show
+   **Ready**.
+
+Content documents, credentials, and inquiries live in `~/ciss-data`, outside
+the web root. Uploaded images live in `public_html/uploads`. Neither location
+is committed to Git. Back up `~/ciss-data` separately—the deployment backup
+only mirrors `public_html`.
+
 ---
 
 ## Quick reference

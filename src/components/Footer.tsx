@@ -1,16 +1,29 @@
 import { Link } from 'react-router-dom';
+import { useSiteContent } from '../context/SiteContentContext';
+import { telHref } from '../data/siteDefaults';
+import RichContent from './RichContent';
 
 export default function Footer() {
+    const { settings, copy } = useSiteContent();
+    const socials = [
+        { url: settings.facebook, label: 'Facebook', icon: 'fab fa-facebook-f' },
+        { url: settings.linkedin, label: 'LinkedIn', icon: 'fab fa-linkedin-in' },
+        { url: settings.instagram, label: 'Instagram', icon: 'fab fa-instagram' },
+        { url: settings.tiktok, label: 'TikTok', icon: 'fab fa-tiktok' },
+    ].filter((item) => item.url);
+
     return (
         <footer className="main-footer">
             <div className="container">
                 <div className="footer-grid">
                     <div className="footer-brand">
-                        <h3 className="footer-brand-title">Colombo Institute of Scientific Studies</h3>
-                        <p className="footer-text">
-                            CISS empowers learners through education, research, wellbeing, and
-                            community-focused services designed for meaningful impact.
-                        </p>
+                        <h3 className="footer-brand-title">{settings.siteName}</h3>
+                        <RichContent className="footer-text rich-content" html={copy('footer.blurb')} />
+                        {socials.length ? (
+                            <div className="footer-social-links">
+                                {socials.map((item) => <a key={item.label} href={item.url} target="_blank" rel="noreferrer" aria-label={item.label}><i className={item.icon} /></a>)}
+                            </div>
+                        ) : null}
                     </div>
 
                     <div className="footer-links-area">
@@ -19,6 +32,7 @@ export default function Footer() {
                             <ul className="footer-links">
                                 <li><Link to="/">Home</Link></li>
                                 <li><Link to="/about">About Us</Link></li>
+                                <li><Link to="/news">News</Link></li>
                                 <li><Link to="/v-care">V-Care</Link></li>
                                 <li><Link to="/elevate">Elevate</Link></li>
                                 <li><Link to="/contact">Contact Us</Link></li>
@@ -43,7 +57,7 @@ export default function Footer() {
                                 <div className="contact-icon-wrapper"><i className="fas fa-phone-alt"></i></div>
                                 <div className="contact-details">
                                     <span className="contact-label">Phone</span>
-                                    <p>+94 702 88 99 00</p>
+                                    <p><a href={telHref(settings)}>{settings.phoneDisplay}</a></p>
                                 </div>
                             </div>
 
@@ -51,7 +65,7 @@ export default function Footer() {
                                 <div className="contact-icon-wrapper"><i className="fas fa-envelope"></i></div>
                                 <div className="contact-details">
                                     <span className="contact-label">Email</span>
-                                    <p>info@ciss.lk</p>
+                                    <p><a href={`mailto:${settings.email}`}>{settings.email}</a></p>
                                 </div>
                             </div>
                         </div>
@@ -59,7 +73,7 @@ export default function Footer() {
                 </div>
 
                 <div className="footer-bottom">
-                    <p>&copy; 2026 Colombo Institute of Scientific Studies (CISS). All rights reserved.</p>
+                    <p>&copy; {new Date().getFullYear()} {settings.siteName} (CISS). All rights reserved.</p>
                     <a
                         href="https://www.instagram.com/martechmedia.digi/"
                         target="_blank"

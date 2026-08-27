@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from 'react';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { useAdminAuth } from '../context/AdminAuthContext';
-import { assetUrl } from '../utils/assets';
+import { useSiteContent } from '../context/SiteContentContext';
 
 type LoginLocationState = {
   from?: {
@@ -12,29 +12,33 @@ type LoginLocationState = {
 export default function AdminLogin() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { isAuthenticated, login } = useAdminAuth();
+  const { isAuthenticated, checking, login } = useAdminAuth();
+  const { image, settings } = useSiteContent();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [submitting, setSubmitting] = useState(false);
 
   const locationState = location.state as LoginLocationState | null;
-  const nextPath = locationState?.from?.pathname || '/certificate-courses';
+  const nextPath = locationState?.from?.pathname || '/admin';
 
-  if (isAuthenticated) {
+  if (!checking && isAuthenticated) {
     return <Navigate to={nextPath} replace />;
   }
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setSubmitting(true);
+    setError('');
 
-    const loggedIn = login(username.trim(), password);
+    const result = await login(username, password);
+    setSubmitting(false);
 
-    if (!loggedIn) {
-      setError('Invalid username or password.');
+    if (!result.ok) {
+      setError(result.error);
       return;
     }
 
-    setError('');
     navigate(nextPath, { replace: true });
   };
 
@@ -43,10 +47,15 @@ export default function AdminLogin() {
         <div className="admin-login-panel">
           <div className="admin-login-copy">
             <img
-              src={assetUrl('images/logo.png')}
-              alt="CISS Logo"
+              src={image('header.logo')}
+              alt={`${settings.siteName} logo`}
               className="admin-login-logo"
             />
+            <div className="admin-login-heading">
+              <span className="admin-login-eyebrow">Secure administration</span>
+              <h1>CISS Admin</h1>
+              <p>Sign in to manage the website.</p>
+            </div>
           </div>
 
         <form className="admin-login-form" onSubmit={handleSubmit}>
@@ -76,8 +85,8 @@ export default function AdminLogin() {
 
           {error ? <p className="admin-login-error">{error}</p> : null}
 
-          <button type="submit" className="btn btn-primary admin-login-submit">
-            Login
+          <button type="submit" className="btn btn-primary admin-login-submit" disabled={submitting || checking}>
+            {submitting ? 'Signing in…' : checking ? 'Checking session…' : 'Sign in'}
           </button>
         </form>
       </div>

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { assetUrl } from '../utils/assets';
 import { useAdminAuth } from '../context/AdminAuthContext';
+import { useSiteContent } from '../context/SiteContentContext';
 
 export default function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -9,6 +9,7 @@ export default function Header() {
     const location = useLocation();
     const navigate = useNavigate();
     const { isAuthenticated, logout } = useAdminAuth();
+    const { image, settings } = useSiteContent();
     const logoSize = 135;
 
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
@@ -23,10 +24,10 @@ export default function Header() {
     };
 
     const isActive = (path: string) => location.pathname === path ? 'active' : '';
-    const handleLogout = () => {
-        logout();
+    const handleLogout = async () => {
+        await logout();
         closeMenu();
-        navigate('/admin');
+        navigate('/admin/login');
     };
 
     return (
@@ -35,8 +36,8 @@ export default function Header() {
                 <div className="logo">
                     <Link to="/" onClick={closeMenu}>
                         <img
-                            src={assetUrl('images/logo.png')}
-                            alt="CISS Logo"
+                            src={image('header.logo')}
+                            alt={`${settings.siteName} logo`}
                             style={{ height: `${logoSize}px`, objectFit: 'contain', margin: '5px 0' }}
                         />
                     </Link>
