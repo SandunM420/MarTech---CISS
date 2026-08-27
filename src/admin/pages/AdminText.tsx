@@ -62,7 +62,7 @@ export default function AdminText() {
                 {groups.map((group) => (
                     <Card key={group} title={group} description="Changes appear on the public site as soon as they are saved.">
                         {textFieldMeta.filter((field) => field.group === group).map((field) => (
-                            <Field key={field.key} label={field.label} help={field.help}>
+                            <Field key={field.key} label={field.label} help={field.help} group={field.multiline}>
                                 {field.multiline ? (
                                     <RichTextEditor
                                         ariaLabel={field.label}

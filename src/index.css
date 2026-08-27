@@ -1830,6 +1830,7 @@ p {
 .admin-rich-surface {
   padding: 1rem;
   color: #1f2937;
+  cursor: text;
   outline: none;
   overflow-wrap: anywhere;
   font-size: 0.9rem;

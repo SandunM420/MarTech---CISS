@@ -178,7 +178,7 @@ function NewsForm({ item, isNew, busy, status, onChange, onCancel, onSave }: { i
                     <Field label="Headline"><input type="text" value={item.title} onChange={(event) => changeTitle(event.target.value)} placeholder="CISS announces…" /></Field>
                     <Field label="URL slug" help={`Public URL: /news/${item.slug || 'article-name'}`}><input type="text" value={item.slug} onChange={(event) => set('slug', slugifyNewsTitle(event.target.value))} placeholder="article-name" /></Field>
                     <Field label="Short summary" help="Shown in the homepage carousel and news cards. Keep it to one or two sentences."><textarea rows={3} maxLength={600} value={item.excerpt} onChange={(event) => set('excerpt', event.target.value)} /></Field>
-                    <Field label="Article body"><RichTextEditor ariaLabel="Article body" minHeight={320} value={item.body} onChange={(html) => set('body', html)} /></Field>
+                    <Field label="Article body" group><RichTextEditor ariaLabel="Article body" minHeight={320} value={item.body} onChange={(html) => set('body', html)} /></Field>
                 </div></section>
 
                 <div className="admin-form-stack">
