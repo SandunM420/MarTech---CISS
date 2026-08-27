@@ -87,16 +87,31 @@ export function Field({
     label,
     help,
     children,
+    group = false,
 }: {
     label: string;
     help?: string;
     children: ReactNode;
+    /** Use for composite controls such as the rich-text editor. */
+    group?: boolean;
 }) {
-    return (
-        <label className="admin-field">
+    const content = (
+        <>
             <span className="admin-field-label">{label}</span>
             {children}
             {help ? <span className="admin-field-help">{help}</span> : null}
+        </>
+    );
+
+    // A label must not contain the rich editor's buttons and select. Doing so
+    // makes label activation steal focus from the contentEditable surface.
+    if (group) {
+        return <div className="admin-field" role="group" aria-label={label}>{content}</div>;
+    }
+
+    return (
+        <label className="admin-field">
+            {content}
         </label>
     );
 }

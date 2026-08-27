@@ -438,6 +438,7 @@ function CourseForm({
                         <Field
                             label="Entry requirements"
                             help="Keep each requirement as a bullet. You can format text and add links within each item."
+                            group
                         >
                             <RichTextEditor
                                 ariaLabel="Entry requirements"
@@ -447,7 +448,7 @@ function CourseForm({
                             />
                         </Field>
 
-                        <Field label="Course structure and modules">
+                        <Field label="Course structure and modules" group>
                             <RichTextEditor
                                 ariaLabel="Course structure and modules"
                                 value={detailed.modulesInfo}
@@ -455,7 +456,7 @@ function CourseForm({
                             />
                         </Field>
 
-                        <Field label="Programme fees">
+                        <Field label="Programme fees" group>
                             <RichTextEditor
                                 ariaLabel="Programme fees"
                                 value={detailed.feesInfo}
